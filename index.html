@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>lilith.work</title>
+</head>
+<body>
+
+<!-- spotify embed -->
+<div class="spotify-card">
+    <iframe
+        src="https://open.spotify.com/embed/playlist/7mis9AIzmpWjUjtPjw23LY?utm_source=generator&theme=0"
+        width="100%"
+        height="152"
+        frameBorder="0"
+        allowfullscreen=""
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy"
+    ></iframe>
+</div>
+
+<script>
+/* ── generate twinkling stars ── */
+(function () {
+    const COUNT = 80;
+    const body = document.body;
+
+    for (let i = 0; i < COUNT; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+
+        const size = Math.random() < 0.2
+            ? Math.floor(Math.random() * 10 + 16)   // large
+            : Math.floor(Math.random() * 8 + 6);     // small
+
+        if (size >= 16) star.classList.add('large');
+
+        star.style.setProperty('--size', size + 'px');
+        star.style.width = size + 'px';
+        star.style.height = size + 'px';
+        star.style.left = Math.random() * 100 + 'vw';
+        star.style.top = Math.random() * 100 + 'vh';
+        star.style.setProperty('--dur', (Math.random() * 4 + 2) + 's');
+        star.style.setProperty('--delay', (Math.random() * 5) + 's');
+        star.style.setProperty('--peak', (Math.random() * 0.5 + 0.4).toFixed(2));
+
+        body.appendChild(star);
+    }
+})();
+
+</script>
+
+</body>
+</html>

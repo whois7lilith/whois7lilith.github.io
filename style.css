@@ -1,0 +1,102 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(180deg,
+        #a8d8ea 0%,
+        #b8c9e8 20%,
+        #c4b8e8 40%,
+        #d4b0e0 55%,
+        #e0aad8 70%,
+        #e8a8d0 85%,
+        #f0b0d0 100%
+    );
+    overflow: hidden;
+    position: relative;
+}
+
+/* ── twinkling stars ── */
+
+.star {
+    position: fixed;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 300;
+    line-height: 1;
+    pointer-events: none;
+    animation: twinkle var(--dur) ease-in-out infinite;
+    animation-delay: var(--delay);
+    opacity: 0;
+}
+
+/* cross shape built from two pseudo-element bars */
+.star::before,
+.star::after {
+    content: '';
+    position: absolute;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 1px;
+}
+
+/* vertical bar */
+.star::before {
+    width: 2px;
+    height: var(--size);
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* horizontal bar */
+.star::after {
+    width: var(--size);
+    height: 2px;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+}
+
+.star.large::before {
+    width: 3px;
+    height: var(--size);
+}
+.star.large::after {
+    width: var(--size);
+    height: 3px;
+}
+
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    50% {
+        opacity: var(--peak);
+        transform: scale(1);
+    }
+}
+
+/* ── spotify card ── */
+
+.spotify-card {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 100;
+    width: 300px;
+    padding: 10px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+}
+
+.spotify-card iframe {
+    border-radius: 8px;
+    display: block;
+}
