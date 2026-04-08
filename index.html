@@ -38,6 +38,15 @@
 .megumi-bubble::before{content:'✦';position:absolute;top:8px;left:10px;font-size:10px;color:rgba(205,175,130,.55)}
 .megumi-bubble::after{content:'✦';position:absolute;top:8px;right:10px;font-size:10px;color:rgba(205,175,130,.55)}
 .megumi-tail{position:absolute;top:100%;left:50%;transform:translateX(-50%);border:10px solid transparent;border-top-color:rgba(205,175,130,.35)}
+
+@media(max-width:768px){
+.yuji-head{width:56px;height:56px}
+.megumi-head{width:64px;height:64px}
+.yuji-bubble{padding:20px 14px;font-size:11px}
+.megumi-bubble{padding:24px;font-size:11px}
+.yuji-btn{font-size:11px;padding:5px 10px}
+.yuji-btns{gap:6px}
+}
 </style>
 <div class="yuji-float" id="yuji"><div class="yuji-bubble"><span class="yuji-tail"></span><div class="yuji-bubble-text"><span style="display:block;margin-bottom:12px">૮꒰ ˶• ༝ •˶꒱ა ♡</span>HELP YUJI FIND NANAMI</div><div class="yuji-btns"><button class="yuji-btn" onclick="window.yujiLeave()">leave yuji alone</button><button class="yuji-btn yuji-btn-primary" onclick="window.yujiFindNanami()">find nanami</button></div></div><img class="yuji-head" src="yujinew_smol.png" alt="Yuji"></div>
 <div class="megumi-float" id="megumi" style="left:0;top:0"><div class="megumi-bubble"><span class="megumi-tail"></span>Itadori?</div><img class="megumi-head" src="megumi.png" alt="Megumi"></div>
@@ -49,7 +58,8 @@
 /* ── yuji random float ── */
 (function(){
   const el=document.getElementById('yuji');
-  const PAD=400,SPEED=0.4;
+  var isMobile=window.innerWidth<=768;
+  const PAD=isMobile?40:400,SPEED=0.4;
   let x=Math.random()*(window.innerWidth-72-PAD*2)+PAD;
   let y=Math.random()*(window.innerHeight-72-PAD*2)+PAD;
   let angle=Math.random()*Math.PI*2;
@@ -60,18 +70,28 @@
 
   var SAFE=60;
   var bubble=el.querySelector('.yuji-bubble');
-  document.addEventListener('mousemove',function(e){
-    var r1=el.getBoundingClientRect();
-    var r2=bubble.getBoundingClientRect();
-    // combine both rects into one bounding box plus safe zone
-    var left=Math.min(r1.left,r2.left)-SAFE;
-    var top=Math.min(r1.top,r2.top)-SAFE;
-    var right=Math.max(r1.right,r2.right)+SAFE;
-    var bottom=Math.max(r1.bottom,r2.bottom)+SAFE;
-    var inside=e.clientX>=left&&e.clientX<=right&&e.clientY>=top&&e.clientY<=bottom;
-    if(inside&&!paused){paused=true;el.classList.add('paused')}
-    if(!inside&&paused&&!locked){paused=false;el.classList.remove('paused')}
-  });
+
+  // mobile: tap to toggle bubble
+  if(isMobile){
+    el.addEventListener('touchstart',function(e){
+      if(locked) return;
+      e.preventDefault();
+      if(paused){paused=false;el.classList.remove('paused')}
+      else{paused=true;el.classList.add('paused')}
+    });
+  } else {
+    document.addEventListener('mousemove',function(e){
+      var r1=el.getBoundingClientRect();
+      var r2=bubble.getBoundingClientRect();
+      var left=Math.min(r1.left,r2.left)-SAFE;
+      var top=Math.min(r1.top,r2.top)-SAFE;
+      var right=Math.max(r1.right,r2.right)+SAFE;
+      var bottom=Math.max(r1.bottom,r2.bottom)+SAFE;
+      var inside=e.clientX>=left&&e.clientX<=right&&e.clientY>=top&&e.clientY<=bottom;
+      if(inside&&!paused){paused=true;el.classList.add('paused')}
+      if(!inside&&paused&&!locked){paused=false;el.classList.remove('paused')}
+    });
+  }
 
   function step(){
     if(!paused){
@@ -111,17 +131,26 @@
     var audio=new Audio('yuji-nanamin-call.mp3');
     audio.currentTime=30;
 
-    // 3. teleport to left-middle with pop
+    // 3. hide, teleport to left-middle, then pop in
+    el.style.opacity='0';
     setTimeout(function(){
       locked=true;
+      // disable transition for instant teleport
+      el.style.transition='none';
       x=PAD;
       y=window.innerHeight/2-36;
       el.style.left=x+'px';
       el.style.top=y+'px';
       paused=true;
 
+      // force reflow then restore transition
+      el.offsetHeight;
+      el.style.transition='';
+      el.style.opacity='1';
+
       // pop effect on the head
       var head=el.querySelector('.yuji-head');
+      var iconSize=isMobile?56:72;
       head.style.animation='yujiPop 0.4s ease-out';
       setTimeout(function(){head.style.animation='yujiSway 1.2s ease-in-out infinite'},400);
 
@@ -131,7 +160,7 @@
       btns.style.display='none';
       bubbleText.innerHTML='NAANAMIIIIIIINNNN.....';
       bubbleText.style.marginBottom='0';
-      bubble.style.padding='40px';
+      bubble.style.padding=isMobile?'24px':'40px';
       el.classList.add('paused');
 
       // 5. play audio from 0:30, fade out at 0:39, stop at 0:40
@@ -153,9 +182,9 @@
       // 7. at 9s (0:39 mark) megumi appears in bottom-right
       setTimeout(function(){
         var meg=document.getElementById('megumi');
-        // position in bottom-right within 400px padding
-        meg.style.left=(window.innerWidth-80-PAD)+'px';
-        meg.style.top=(window.innerHeight-80-PAD)+'px';
+        var megSize=isMobile?64:80;
+        meg.style.left=(window.innerWidth-megSize-PAD)+'px';
+        meg.style.top=(window.innerHeight-megSize-PAD)+'px';
         meg.style.display='block';
         var megHead=meg.querySelector('.megumi-head');
         megHead.style.animation='yujiPop 0.4s ease-out';
@@ -164,40 +193,42 @@
         meg.querySelector('.megumi-bubble').style.opacity='1';
         meg.querySelector('.megumi-bubble').style.transform='translateX(-50%) scale(1)';
 
+        // after 5s change megumi text
+        var megBubble=meg.querySelector('.megumi-bubble');
+        setTimeout(function(){
+          megBubble.lastChild.textContent='( ｡ •̀ ᴖ •́ ｡)💢';
+        },5000);
+
         // at 13s (4s after megumi appears) megumi starts sliding toward center
         setTimeout(function(){
-          // target: center + offset right (leave gap for nanami in middle)
-          var centerY=window.innerHeight/2-40;
-          var centerX=window.innerWidth/2+50;
+          var centerY=window.innerHeight/2-(megSize/2);
+          var centerX=isMobile?window.innerWidth/2+10:window.innerWidth/2+50;
           meg.style.left=centerX+'px';
           meg.style.top=centerY+'px';
         },4000);
       },9000);
 
-      // 8. at 11s yuji text changes + second audio clip 0:50-0:56
-      // yuji also starts sliding to center-left (leave gap for nanami between them)
+      // 8. at 11s yuji text changes + second audio clip 0:51 with fade-in
       setTimeout(function(){
         var audio2=new Audio('yuji-nanamin-call.mp3');
-        audio2.currentTime=50;
+        audio2.currentTime=51;
+        audio2.volume=0;
         audio2.play();
+        // fade in over 1s
+        var fadeInInt=setInterval(function(){
+          if(audio2.volume<0.95){audio2.volume=Math.min(1,audio2.volume+0.05)}
+          else{audio2.volume=1;clearInterval(fadeInInt)}
+        },50);
+        // hard cut at 0:57
         setTimeout(function(){
-          var fadeInt2=setInterval(function(){
-            if(audio2.volume>0.05){audio2.volume=Math.max(0,audio2.volume-0.05)}
-            else{audio2.volume=0;audio2.pause();clearInterval(fadeInt2)}
-          },50);
-        },5500);
+          audio2.pause();
+        },6000);
 
         bubbleText.innerHTML='NA-NA-NA-NA-NA-NA-MIN!';
 
-        // slide yuji to center-left (leave ~100px gap for nanami icon in middle)
-        var centerY=window.innerHeight/2-36;
-        var centerX=window.innerWidth/2-122;
-        el.style.left=centerX+'px';
-        el.style.top=centerY+'px';
-
-        // after 4s change to "NA-NA-"
+        // after 4s (0:55) change text
         setTimeout(function(){
-          bubbleText.innerHTML='NA-NA-';
+          bubbleText.innerHTML='Fushiguro!...NANAMIN!';
         },4000);
       },11000);
 
