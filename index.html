@@ -14,6 +14,7 @@
 .yuji-float:hover .yuji-head{transform:scale(1.055)}
 @keyframes yujiBob{0%,100%{transform:translateY(0)}20%{transform:translateY(-6px)}40%{transform:translateY(0)}55%{transform:translateY(-3px)}70%{transform:translateY(0)}}
 @keyframes yujiSway{0%,100%{transform:translateX(0)}50%{transform:translateX(5px)}}
+@keyframes yujiPop{0%{transform:scale(0)}50%{transform:scale(1.3)}100%{transform:scale(1)}}
 
 .yuji-bubble{position:absolute;bottom:calc(100% + 14px);left:50%;transform:translateX(-50%) scale(.7);background:rgba(242,210,228,.45);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1.5px solid rgba(205,175,130,.45);color:#4a3f6b;font-family:system-ui,sans-serif;font-size:13px;line-height:1.4;padding:32px 20px;border-radius:12px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease;box-shadow:0 4px 20px rgba(0,0,0,.08);text-align:center;overflow:visible}
 .yuji-bubble::before{content:'✦';position:absolute;top:8px;left:10px;font-size:10px;color:rgba(205,175,130,.55)}
@@ -23,13 +24,14 @@
 .yuji-bubble-text::after{content:'✦';position:absolute;bottom:-2px;right:-14px;font-size:8px;color:rgba(205,175,130,.45)}
 .yuji-tail{position:absolute;top:100%;left:50%;transform:translateX(-50%);border:10px solid transparent;border-top-color:rgba(205,175,130,.35)}
 .yuji-float:hover .yuji-bubble,.yuji-float.paused .yuji-bubble{opacity:1;transform:translateX(-50%) scale(1);pointer-events:auto}
+.yuji-float.yuji-searching .yuji-bubble{opacity:1;transform:translateX(-50%) scale(1);pointer-events:auto}
 .yuji-btns{display:flex;gap:8px;justify-content:center}
 .yuji-btn{padding:6px 14px;border-radius:8px;border:2px solid rgba(224,170,216,.6);background:rgba(255,255,255,.25);color:#5a4f7b;font-family:system-ui,sans-serif;font-size:13px;font-weight:700;letter-spacing:.5px;text-transform:none;cursor:pointer;transition:all .2s ease;box-shadow:0 2px 6px rgba(0,0,0,.06)}
 .yuji-btn:hover{background:rgba(255,255,255,.45);border-color:rgba(224,170,216,.8);transform:translateY(-1px)}
 .yuji-btn-primary{background:rgba(200,130,185,.7);color:#fff;border-color:rgba(200,130,185,.8);text-transform:uppercase}
 .yuji-btn-primary:hover{background:rgba(200,130,185,.85);border-color:rgba(200,130,185,1)}
 </style>
-<div class="yuji-float" id="yuji"><div class="yuji-bubble"><span class="yuji-tail"></span><div class="yuji-bubble-text"><span style="display:block;margin-bottom:12px">૮꒰ ˶• ༝ •˶꒱ა ♡</span>HELP YUJI FIND NANAMI</div><div class="yuji-btns"><button class="yuji-btn" onclick="event.stopPropagation()">leave yuji alone</button><button class="yuji-btn yuji-btn-primary" onclick="alert('🔍 nanami search begins!')">find nanami</button></div></div><img class="yuji-head" src="yujinew_smol.png" alt="Yuji"></div>
+<div class="yuji-float" id="yuji"><div class="yuji-bubble"><span class="yuji-tail"></span><div class="yuji-bubble-text"><span style="display:block;margin-bottom:12px">૮꒰ ˶• ༝ •˶꒱ა ♡</span>HELP YUJI FIND NANAMI</div><div class="yuji-btns"><button class="yuji-btn" onclick="window.yujiLeave()">leave yuji alone</button><button class="yuji-btn yuji-btn-primary" onclick="window.yujiFindNanami()">find nanami</button></div></div><img class="yuji-head" src="yujinew_smol.png" alt="Yuji"></div>
 <body>
 
 
@@ -42,7 +44,7 @@
   let x=Math.random()*(window.innerWidth-72-PAD*2)+PAD;
   let y=Math.random()*(window.innerHeight-72-PAD*2)+PAD;
   let angle=Math.random()*Math.PI*2;
-  let paused=false,raf;
+  let paused=false,raf,locked=false;
 
   el.style.left=x+'px';
   el.style.top=y+'px';
@@ -59,7 +61,7 @@
     var bottom=Math.max(r1.bottom,r2.bottom)+SAFE;
     var inside=e.clientX>=left&&e.clientX<=right&&e.clientY>=top&&e.clientY<=bottom;
     if(inside&&!paused){paused=true;el.classList.add('paused')}
-    if(!inside&&paused){paused=false;el.classList.remove('paused')}
+    if(!inside&&paused&&!locked){paused=false;el.classList.remove('paused')}
   });
 
   function step(){
@@ -79,6 +81,57 @@
     raf=requestAnimationFrame(step);
   }
   step();
+
+  // leave yuji alone: close bubble, resume floating
+  window.yujiLeave=function(){
+    paused=false;
+    el.classList.remove('paused');
+  };
+
+  // find nanami sequence
+  window.yujiFindNanami=function(){
+    // 1. close current bubble
+    paused=false;
+    el.classList.remove('paused');
+
+    // 2. disable hover during sequence
+    var searching=true;
+    el.classList.add('yuji-searching');
+
+    // 3. teleport to left-middle with pop
+    setTimeout(function(){
+      locked=true;
+      x=100;
+      y=window.innerHeight/2-36;
+      el.style.left=x+'px';
+      el.style.top=y+'px';
+      paused=true;
+
+      // pop effect on the head
+      var head=el.querySelector('.yuji-head');
+      head.style.animation='yujiPop 0.4s ease-out';
+      setTimeout(function(){head.style.animation='yujiSway 1.2s ease-in-out infinite'},400);
+
+      // 4. show search bubble with first text
+      var bubbleText=el.querySelector('.yuji-bubble-text');
+      var btns=el.querySelector('.yuji-btns');
+      btns.style.display='none';
+      bubbleText.innerHTML='NAANAMIIIIIIINNNN.....';
+      el.classList.add('paused');
+
+      // 5. play audio clip from 0:29 to 0:38
+      var audio=new Audio('Yuji calling Nanamin Jujutsu Kaisen 2.mp3');
+      audio.currentTime=29;
+      audio.play();
+      setTimeout(function(){audio.pause()},9000);
+
+      // 6. after 6s replace text
+      setTimeout(function(){
+        bubbleText.innerHTML='NANAMIN, ARE YOU HERE?!?';
+      },6000);
+
+    },300);
+  };
 })();
 </script>
 
