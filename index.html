@@ -251,12 +251,12 @@
         bubble.style.removeProperty('opacity');
         bubble.style.opacity='1';
 
-        // after 4s change to "NA-NA-"
+        // after 2s change to "NA-NA-"
         setTimeout(function(){
           bubbleText.innerHTML='NA-NA-';
-        },4000);
+        },2000);
 
-        // after 6s change to "Fushiguro!...NANAMIN!" + surprise look
+        // after 3s change to "Fushiguro!...NANAMIN!" + surprise look
         setTimeout(function(){
           bubbleText.innerHTML='Fushiguro!...NANAMIN!';
           var yujiHead=el.querySelector('.yuji-head');
@@ -267,6 +267,11 @@
             yujiHead.style.animation='yujiSway 1.2s ease-in-out infinite';
             megHead.style.animation='yujiSway 1.2s ease-in-out infinite';
           },500);
+
+          // after 2s replace with "..."
+          setTimeout(function(){
+            bubbleText.innerHTML='...';
+          },2000);
 
           // nanami appears tripled size with star glow
           var nana=document.getElementById('nanami');
