@@ -42,14 +42,22 @@
 @media(max-width:768px){
 .yuji-head{width:56px;height:56px}
 .megumi-head{width:64px;height:64px}
+.nanami-head{width:68px;height:68px}
 .yuji-bubble{padding:20px 14px;font-size:11px}
 .megumi-bubble{padding:24px;font-size:11px}
 .yuji-btn{font-size:11px;padding:5px 10px}
 .yuji-btns{gap:6px}
 }
+
+.nanami-float{position:fixed;z-index:9997;pointer-events:none;display:none}
+.nanami-head{width:76px;height:76px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.25))}
+.nanami-glow{animation:nanamiGlow 2s ease-in-out infinite}
+@keyframes nanamiGlow{0%,100%{filter:drop-shadow(0 0 8px rgba(205,175,130,.3)) drop-shadow(0 0 20px rgba(242,210,228,.2))}50%{filter:drop-shadow(0 0 16px rgba(205,175,130,.6)) drop-shadow(0 0 40px rgba(242,210,228,.4))}}
+@keyframes surpriseLook{0%{transform:scale(1) translateX(0)}15%{transform:scale(1.2) translateX(6px)}30%{transform:scale(0.95) translateX(4px)}50%{transform:scale(1.05) translateX(5px)}100%{transform:scale(1) translateX(3px)}}
 </style>
 <div class="yuji-float" id="yuji"><div class="yuji-bubble"><span class="yuji-tail"></span><div class="yuji-bubble-text"><span style="display:block;margin-bottom:12px">૮꒰ ˶• ༝ •˶꒱ა ♡</span>HELP YUJI FIND NANAMI</div><div class="yuji-btns"><button class="yuji-btn" onclick="window.yujiLeave()">leave yuji alone</button><button class="yuji-btn yuji-btn-primary" onclick="window.yujiFindNanami()">find nanami</button></div></div><img class="yuji-head" src="yujinew_smol.png" alt="Yuji"></div>
 <div class="megumi-float" id="megumi" style="left:0;top:0"><div class="megumi-bubble"><span class="megumi-tail"></span>Itadori?</div><img class="megumi-head" src="megumi.png" alt="Megumi"></div>
+<div class="nanami-float" id="nanami"><img class="nanami-head" src="nanami.png" alt="Nanami"></div>
 <body>
 
 
@@ -199,13 +207,14 @@
           megBubble.lastChild.textContent='( ｡ •̀ ᴖ •́ ｡)💢';
         },5000);
 
-        // at 13s (4s after megumi appears) megumi starts sliding toward center
+        // 2s after appearing, megumi slides to yuji's side
         setTimeout(function(){
-          var centerY=window.innerHeight/2-(megSize/2);
-          var centerX=isMobile?window.innerWidth/2+10:window.innerWidth/2+50;
-          meg.style.left=centerX+'px';
-          meg.style.top=centerY+'px';
-        },4000);
+          var yujiY=window.innerHeight/2-36;
+          var megTargetX=PAD+(isMobile?56:72)+12;
+          var megTargetY=yujiY-4;
+          meg.style.left=megTargetX+'px';
+          meg.style.top=megTargetY+'px';
+        },2000);
       },9000);
 
       // 8. at 11s yuji text changes + second audio clip 0:51 with fade-in
@@ -219,16 +228,53 @@
           if(audio2.volume<0.95){audio2.volume=Math.min(1,audio2.volume+0.05)}
           else{audio2.volume=1;clearInterval(fadeInInt)}
         },50);
-        // hard cut at 0:57
+        // hard cut at 0:58
         setTimeout(function(){
           audio2.pause();
-        },6000);
+        },7000);
 
         bubbleText.innerHTML='NA-NA-NA-NA-NA-NA-MIN!';
 
-        // after 4s (0:55) change text
+        // at 2s (13s total) nanami appears at center with pop + glow
+        setTimeout(function(){
+          var nana=document.getElementById('nanami');
+          var nanaSize=isMobile?68:76;
+          nana.style.left=(window.innerWidth/2-nanaSize/2)+'px';
+          nana.style.top=(window.innerHeight/2-nanaSize/2)+'px';
+          nana.style.display='block';
+          var nanaHead=nana.querySelector('.nanami-head');
+          nanaHead.style.animation='yujiPop 0.4s ease-out';
+          setTimeout(function(){
+            nanaHead.style.animation='yujiBob 1.6s ease-in-out infinite';
+            nanaHead.classList.add('nanami-glow');
+          },400);
+
+          // 3s after nanami appears: play Daddys Home + change texts
+          setTimeout(function(){
+            var audio3=new Audio('Daddys%20Home.mp3');
+            audio3.play();
+            setTimeout(function(){audio3.pause()},10000);
+
+            // change yuji and megumi text to ".........."
+            bubbleText.innerHTML='.........';
+            var megBubble2=document.getElementById('megumi').querySelector('.megumi-bubble');
+            megBubble2.lastChild.textContent='.........';
+          },3000);
+        },2000);
+
+        // after 4s (0:55) change text + surprise look right
         setTimeout(function(){
           bubbleText.innerHTML='Fushiguro!...NANAMIN!';
+          // both yuji and megumi do surprise look toward nanami (right)
+          var yujiHead=el.querySelector('.yuji-head');
+          var megHead=document.getElementById('megumi').querySelector('.megumi-head');
+          yujiHead.style.animation='surpriseLook 0.4s ease-out forwards';
+          megHead.style.animation='surpriseLook 0.4s ease-out forwards';
+          // after surprise, settle into gentle sway
+          setTimeout(function(){
+            yujiHead.style.animation='yujiSway 1.2s ease-in-out infinite';
+            megHead.style.animation='yujiSway 1.2s ease-in-out infinite';
+          },500);
         },4000);
       },11000);
 
