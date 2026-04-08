@@ -40,7 +40,7 @@
 /* ── yuji random float ── */
 (function(){
   const el=document.getElementById('yuji');
-  const PAD=100,SPEED=0.4;
+  const PAD=400,SPEED=0.4;
   let x=Math.random()*(window.innerWidth-72-PAD*2)+PAD;
   let y=Math.random()*(window.innerHeight-72-PAD*2)+PAD;
   let angle=Math.random()*Math.PI*2;
@@ -98,6 +98,10 @@
     var searching=true;
     el.classList.add('yuji-searching');
 
+    // pre-create audio in click context for autoplay policy
+    var audio=new Audio('Yuji calling Nanamin Jujutsu Kaisen 2.mp3');
+    audio.currentTime=29;
+
     // 3. teleport to left-middle with pop
     setTimeout(function(){
       locked=true;
@@ -117,11 +121,11 @@
       var btns=el.querySelector('.yuji-btns');
       btns.style.display='none';
       bubbleText.innerHTML='NAANAMIIIIIIINNNN.....';
+      bubbleText.style.marginBottom='0';
+      bubble.style.padding='40px';
       el.classList.add('paused');
 
       // 5. play audio clip from 0:29 to 0:38
-      var audio=new Audio('Yuji calling Nanamin Jujutsu Kaisen 2.mp3');
-      audio.currentTime=29;
       audio.play();
       setTimeout(function(){audio.pause()},9000);
 
