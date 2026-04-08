@@ -8,18 +8,28 @@
 </head>
     <!-- yuji floating head easter egg -->
 <style>
-:root{--yuji-speed:18s;--yuji-y:82%}
-.yuji-wrap{position:fixed;top:var(--yuji-y);left:0;width:100%;height:0;pointer-events:none;z-index:9999;overflow:visible}
-.yuji-mover{position:absolute;pointer-events:auto;animation:yujiSlide var(--yuji-speed) linear infinite;cursor:pointer}
+.yuji-float{position:fixed;z-index:9999;pointer-events:auto;cursor:pointer;transition:none;padding-top:14px}
+.yuji-float.paused .yuji-head{animation:yujiSway 1.2s ease-in-out infinite}
 .yuji-head{width:48px;height:48px;animation:yujiBob 1.6s ease-in-out infinite;filter:drop-shadow(0 2px 8px rgba(0,0,0,.25));transition:transform .2s ease}
-.yuji-mover:hover .yuji-head{transform:scale(1.15)}
-.yuji-bubble{position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%) scale(.7);background:#1a1a2e;color:#e0dfe6;font-family:system-ui,sans-serif;font-size:13px;line-height:1.4;padding:8px 14px;border-radius:10px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease;box-shadow:0 4px 16px rgba(0,0,0,.35)}
-.yuji-bubble::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:#1a1a2e}
-.yuji-mover:hover .yuji-bubble{opacity:1;transform:translateX(-50%) scale(1)}
-@keyframes yujiSlide{0%{right:-60px}100%{right:calc(100% + 60px)}}
+.yuji-float:hover .yuji-head{transform:scale(1.15)}
 @keyframes yujiBob{0%,100%{transform:translateY(0)}20%{transform:translateY(-6px)}40%{transform:translateY(0)}55%{transform:translateY(-3px)}70%{transform:translateY(0)}}
+@keyframes yujiSway{0%,100%{transform:translateX(0)}50%{transform:translateX(5px)}}
+
+.yuji-bubble{position:absolute;bottom:calc(100% + 14px);left:50%;transform:translateX(-50%) scale(.7);background:rgba(242,210,228,.45);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1.5px solid rgba(205,175,130,.45);color:#4a3f6b;font-family:system-ui,sans-serif;font-size:13px;line-height:1.4;padding:32px 20px;border-radius:12px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease;box-shadow:0 4px 20px rgba(0,0,0,.08);text-align:center;overflow:visible}
+.yuji-bubble::before{content:'✦';position:absolute;top:8px;left:10px;font-size:10px;color:rgba(205,175,130,.55)}
+.yuji-bubble::after{content:'✦';position:absolute;top:8px;right:10px;font-size:10px;color:rgba(205,175,130,.55)}
+.yuji-bubble-text{margin-bottom:24px;font-weight:500;position:relative}
+.yuji-bubble-text::before{content:'✦';position:absolute;bottom:-2px;left:-14px;font-size:8px;color:rgba(205,175,130,.45)}
+.yuji-bubble-text::after{content:'✦';position:absolute;bottom:-2px;right:-14px;font-size:8px;color:rgba(205,175,130,.45)}
+.yuji-tail{position:absolute;top:100%;left:50%;transform:translateX(-50%);border:10px solid transparent;border-top-color:rgba(205,175,130,.35)}
+.yuji-float:hover .yuji-bubble,.yuji-float.paused .yuji-bubble{opacity:1;transform:translateX(-50%) scale(1);pointer-events:auto}
+.yuji-btns{display:flex;gap:8px;justify-content:center}
+.yuji-btn{padding:6px 14px;border-radius:8px;border:2px solid rgba(224,170,216,.6);background:rgba(255,255,255,.25);color:#5a4f7b;font-family:system-ui,sans-serif;font-size:13px;font-weight:700;letter-spacing:.5px;text-transform:none;cursor:pointer;transition:all .2s ease;box-shadow:0 2px 6px rgba(0,0,0,.06)}
+.yuji-btn:hover{background:rgba(255,255,255,.45);border-color:rgba(224,170,216,.8);transform:translateY(-1px)}
+.yuji-btn-primary{background:rgba(200,130,185,.7);color:#fff;border-color:rgba(200,130,185,.8);text-transform:uppercase}
+.yuji-btn-primary:hover{background:rgba(200,130,185,.85);border-color:rgba(200,130,185,1)}
 </style>
-<div class="yuji-wrap"><div class="yuji-mover"><span class="yuji-bubble">yuji has something he wants to share with you</span><img class="yuji-head" src="yuji-head.png" alt="Yuji"></div></div>
+<div class="yuji-float" id="yuji"><div class="yuji-bubble"><span class="yuji-tail"></span><div class="yuji-bubble-text"><span style="display:block;margin-bottom:12px">૮꒰ ˶• ༝ •˶꒱ა ♡</span>HELP YUJI FIND NANAMI</div><div class="yuji-btns"><button class="yuji-btn" onclick="document.getElementById('yuji').style.display='none'">leave yuji alone</button><button class="yuji-btn yuji-btn-primary" onclick="alert('🔍 nanami search begins!')">find nanami</button></div></div><img class="yuji-head" src="yuji-head.png" alt="Yuji"></div>
 <body>
 
 <!-- spotify embed -->
@@ -34,6 +44,42 @@
         loading="lazy"
     ></iframe>
 </div>
+
+<script>
+/* ── yuji random float ── */
+(function(){
+  const el=document.getElementById('yuji');
+  const PAD=100,SPEED=0.4;
+  let x=Math.random()*(window.innerWidth-48-PAD*2)+PAD;
+  let y=Math.random()*(window.innerHeight-48-PAD*2)+PAD;
+  let angle=Math.random()*Math.PI*2;
+  let paused=false,raf;
+
+  el.style.left=x+'px';
+  el.style.top=y+'px';
+
+  el.addEventListener('mouseenter',function(){paused=true;el.classList.add('paused')});
+  el.addEventListener('mouseleave',function(){paused=false;el.classList.remove('paused')});
+
+  function step(){
+    if(!paused){
+      x+=Math.cos(angle)*SPEED;
+      y+=Math.sin(angle)*SPEED;
+      // gentle wandering
+      angle+=((Math.random()-0.5)*0.04);
+      // bounce off padded edges
+      if(x<PAD){x=PAD;angle=Math.PI-angle;}
+      if(x>window.innerWidth-48-PAD){x=window.innerWidth-48-PAD;angle=Math.PI-angle;}
+      if(y<PAD){y=PAD;angle=-angle;}
+      if(y>window.innerHeight-48-PAD){y=window.innerHeight-48-PAD;angle=-angle;}
+      el.style.left=x+'px';
+      el.style.top=y+'px';
+    }
+    raf=requestAnimationFrame(step);
+  }
+  step();
+})();
+</script>
 
 <script>
 /* ── generate twinkling stars ── */
