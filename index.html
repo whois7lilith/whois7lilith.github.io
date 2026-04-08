@@ -175,27 +175,27 @@
       // 5. play audio from 0:30, fade out at 0:39, stop at 0:40
       audio.volume=1;
       audio.play();
-      // fade out starting at 9s (0:39)
+      // fade out starting at 14s
       setTimeout(function(){
         var fadeInt=setInterval(function(){
           if(audio.volume>0.05){audio.volume=Math.max(0,audio.volume-0.05)}
           else{audio.volume=0;audio.pause();clearInterval(fadeInt)}
         },50);
-      },9000);
+      },14000);
 
-      // 6. after 6s replace text
+      // 6. after 5s replace text
       setTimeout(function(){
         bubbleText.innerHTML='NANAMIN, ARE YOU HERE?!?';
         bubble.style.removeProperty('opacity');
         bubble.style.opacity='1';
-      },6000);
+      },5000);
 
-      // at 9s: bubble disappears with audio fade
+      // at 15s: bubble disappears
       setTimeout(function(){
         bubble.style.setProperty('opacity','0','important');
-      },9000);
+      },15000);
 
-      // 7. at 9s (0:39 mark) megumi appears in bottom-right
+      // 7. at 15s megumi appears in bottom-right
       setTimeout(function(){
         var meg=document.getElementById('megumi');
         var megSize=isMobile?56:72;
@@ -228,12 +228,12 @@
           meg.style.left=megTargetX+'px';
           meg.style.top=megTargetY+'px';
         },2000);
-      },9000);
+      },15000);
 
-      // 8. at 11s yuji text changes + second audio clip 0:50
+      // 8. at 17s yuji text changes + second audio clip 0:51
       setTimeout(function(){
         var audio2=new Audio('yuji-nanamin-call.mp3');
-        audio2.currentTime=50;
+        audio2.currentTime=51;
         audio2.volume=0;
         audio2.play();
         // fade in over 1s
@@ -241,10 +241,10 @@
           if(audio2.volume<0.95){audio2.volume=Math.min(1,audio2.volume+0.05)}
           else{audio2.volume=1;clearInterval(fadeInInt)}
         },50);
-        // hard cut at 0:58 (8s)
+        // hard cut at 0:58 (7s)
         setTimeout(function(){
           audio2.pause();
-        },8000);
+        },7000);
 
         // show bubble again with new text
         bubbleText.innerHTML='NA-NA-NA-NA-NA-NA-MIN!';
@@ -387,7 +387,7 @@
           },1500);
         },6000);
 
-      },11000);
+      },17000);
 
     },300);
   };
