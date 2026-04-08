@@ -99,13 +99,13 @@
     el.classList.add('yuji-searching');
 
     // pre-create audio in click context for autoplay policy
-    var audio=new Audio('Yuji calling Nanamin Jujutsu Kaisen 2.mp3');
+    var audio=new Audio('yuji-nanamin-call.mp3');
     audio.currentTime=29;
 
     // 3. teleport to left-middle with pop
     setTimeout(function(){
       locked=true;
-      x=100;
+      x=PAD;
       y=window.innerHeight/2-36;
       el.style.left=x+'px';
       el.style.top=y+'px';
