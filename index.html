@@ -175,13 +175,13 @@
       // 5. play audio from 0:30, fade out at 0:39, stop at 0:40
       audio.volume=1;
       audio.play();
-      // fade out starting at 14s
+      // fade out starting at 9s (0:39)
       setTimeout(function(){
         var fadeInt=setInterval(function(){
           if(audio.volume>0.05){audio.volume=Math.max(0,audio.volume-0.05)}
           else{audio.volume=0;audio.pause();clearInterval(fadeInt)}
         },50);
-      },14000);
+      },9000);
 
       // 6. after 5s replace text
       setTimeout(function(){
@@ -195,7 +195,7 @@
         bubble.style.setProperty('opacity','0','important');
       },15000);
 
-      // 7. at 15s megumi appears in bottom-right
+      // 7. at 9s megumi appears in bottom-right
       setTimeout(function(){
         var meg=document.getElementById('megumi');
         var megSize=isMobile?56:72;
@@ -228,9 +228,9 @@
           meg.style.left=megTargetX+'px';
           meg.style.top=megTargetY+'px';
         },2000);
-      },15000);
+      },9000);
 
-      // 8. at 17s yuji text changes + second audio clip 0:51
+      // 8. at 11s yuji text changes + second audio clip 0:51
       setTimeout(function(){
         var audio2=new Audio('yuji-nanamin-call.mp3');
         audio2.currentTime=51;
@@ -387,7 +387,7 @@
           },1500);
         },6000);
 
-      },17000);
+      },11000);
 
     },300);
   };
