@@ -183,13 +183,17 @@
         },50);
       },9000);
 
-      // 6. after 5s replace text
+      // 6. after 6s replace text
       setTimeout(function(){
         bubbleText.innerHTML='NANAMIN, ARE YOU HERE?!?';
-        setTimeout(function(){
-          bubble.style.setProperty('opacity','0','important');
-        },2000);
-      },5000);
+        bubble.style.removeProperty('opacity');
+        bubble.style.opacity='1';
+      },6000);
+
+      // at 9s: bubble disappears with audio fade
+      setTimeout(function(){
+        bubble.style.setProperty('opacity','0','important');
+      },9000);
 
       // 7. at 9s (0:39 mark) megumi appears in bottom-right
       setTimeout(function(){
@@ -216,7 +220,7 @@
           megBubble.lastChild.textContent='( ｡ •̀ ᴖ •́ ｡)💢';
         },5000);
 
-        // 2s after appearing, megumi slides to yuji's side (wide enough for both bubbles)
+        // 2s after appearing, megumi slides to yuji's side
         setTimeout(function(){
           var yujiY=window.innerHeight/2-36;
           var megTargetX=PAD+(isMobile?56:72)+(isMobile?120:180);
@@ -226,10 +230,10 @@
         },2000);
       },9000);
 
-      // 8. at 11s yuji text changes + second audio clip 0:51 with fade-in
+      // 8. at 11s yuji text changes + second audio clip 0:50
       setTimeout(function(){
         var audio2=new Audio('yuji-nanamin-call.mp3');
-        audio2.currentTime=51;
+        audio2.currentTime=50;
         audio2.volume=0;
         audio2.play();
         // fade in over 1s
@@ -237,12 +241,15 @@
           if(audio2.volume<0.95){audio2.volume=Math.min(1,audio2.volume+0.05)}
           else{audio2.volume=1;clearInterval(fadeInInt)}
         },50);
-        // hard cut at 0:58 (7s)
+        // hard cut at 0:58 (8s)
         setTimeout(function(){
           audio2.pause();
-        },7000);
+        },8000);
 
+        // show bubble again with new text
         bubbleText.innerHTML='NA-NA-NA-NA-NA-NA-MIN!';
+        bubble.style.removeProperty('opacity');
+        bubble.style.opacity='1';
 
         // after 4s change to "NA-NA-"
         setTimeout(function(){
