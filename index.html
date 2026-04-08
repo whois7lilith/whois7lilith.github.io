@@ -11,7 +11,7 @@
 .yuji-float{position:fixed;z-index:9999;pointer-events:auto;cursor:pointer;transition:none;padding-top:14px}
 .yuji-float.paused .yuji-head{animation:yujiSway 1.2s ease-in-out infinite}
 .yuji-head{width:72px;height:72px;animation:yujiBob 1.6s ease-in-out infinite;filter:drop-shadow(0 2px 8px rgba(0,0,0,.25));transition:transform .2s ease}
-.yuji-float:hover .yuji-head{transform:scale(1.15)}
+.yuji-float:hover .yuji-head{transform:scale(1.055)}
 @keyframes yujiBob{0%,100%{transform:translateY(0)}20%{transform:translateY(-6px)}40%{transform:translateY(0)}55%{transform:translateY(-3px)}70%{transform:translateY(0)}}
 @keyframes yujiSway{0%,100%{transform:translateX(0)}50%{transform:translateX(5px)}}
 
@@ -29,7 +29,7 @@
 .yuji-btn-primary{background:rgba(200,130,185,.7);color:#fff;border-color:rgba(200,130,185,.8);text-transform:uppercase}
 .yuji-btn-primary:hover{background:rgba(200,130,185,.85);border-color:rgba(200,130,185,1)}
 </style>
-<div class="yuji-float" id="yuji"><div class="yuji-bubble"><span class="yuji-tail"></span><div class="yuji-bubble-text"><span style="display:block;margin-bottom:12px">૮꒰ ˶• ༝ •˶꒱ა ♡</span>HELP YUJI FIND NANAMI</div><div class="yuji-btns"><button class="yuji-btn" onclick="document.getElementById('yuji').style.display='none'">leave yuji alone</button><button class="yuji-btn yuji-btn-primary" onclick="alert('🔍 nanami search begins!')">find nanami</button></div></div><img class="yuji-head" src="yuji-head.png" alt="Yuji"></div>
+<div class="yuji-float" id="yuji"><div class="yuji-bubble"><span class="yuji-tail"></span><div class="yuji-bubble-text"><span style="display:block;margin-bottom:12px">૮꒰ ˶• ༝ •˶꒱ა ♡</span>HELP YUJI FIND NANAMI</div><div class="yuji-btns"><button class="yuji-btn" onclick="event.stopPropagation()">leave yuji alone</button><button class="yuji-btn yuji-btn-primary" onclick="alert('🔍 nanami search begins!')">find nanami</button></div></div><img class="yuji-head" src="yujinew_smol.png" alt="Yuji"></div>
 <body>
 
 
