@@ -24,6 +24,7 @@
 .yuji-bubble-text::after{content:'✦';position:absolute;bottom:-2px;right:-14px;font-size:8px;color:rgba(205,175,130,.45)}
 .yuji-tail{position:absolute;top:100%;left:50%;transform:translateX(-50%);border:10px solid transparent;border-top-color:rgba(205,175,130,.35)}
 .yuji-float:hover .yuji-bubble,.yuji-float.paused .yuji-bubble{opacity:1;transform:translateX(-50%) scale(1);pointer-events:auto}
+.yuji-float.yuji-searching{transition:left 3s ease-in-out,top 3s ease-in-out}
 .yuji-float.yuji-searching .yuji-bubble{opacity:1;transform:translateX(-50%) scale(1);pointer-events:auto}
 .yuji-btns{display:flex;gap:8px;justify-content:center}
 .yuji-btn{padding:6px 14px;border-radius:8px;border:2px solid rgba(224,170,216,.6);background:rgba(255,255,255,.25);color:#5a4f7b;font-family:system-ui,sans-serif;font-size:13px;font-weight:700;letter-spacing:.5px;text-transform:none;cursor:pointer;transition:all .2s ease;box-shadow:0 2px 6px rgba(0,0,0,.06)}
@@ -31,15 +32,15 @@
 .yuji-btn-primary{background:rgba(200,130,185,.7);color:#fff;border-color:rgba(200,130,185,.8);text-transform:uppercase}
 .yuji-btn-primary:hover{background:rgba(200,130,185,.85);border-color:rgba(200,130,185,1)}
 
-.megumi-float{position:fixed;z-index:9998;pointer-events:none;display:none}
-.megumi-head{width:72px;height:72px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.25))}
+.megumi-float{position:fixed;z-index:9998;pointer-events:none;display:none;transition:right 3s ease-in-out,bottom 3s ease-in-out,top 3s ease-in-out,left 3s ease-in-out}
+.megumi-head{width:80px;height:80px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.25))}
 .megumi-bubble{position:absolute;bottom:calc(100% + 14px);left:50%;transform:translateX(-50%) scale(.7);background:rgba(242,210,228,.45);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1.5px solid rgba(205,175,130,.45);color:#4a3f6b;font-family:system-ui,sans-serif;font-size:13px;line-height:1.4;padding:40px;border-radius:12px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease;box-shadow:0 4px 20px rgba(0,0,0,.08);text-align:center;overflow:visible;font-weight:500}
 .megumi-bubble::before{content:'✦';position:absolute;top:8px;left:10px;font-size:10px;color:rgba(205,175,130,.55)}
 .megumi-bubble::after{content:'✦';position:absolute;top:8px;right:10px;font-size:10px;color:rgba(205,175,130,.55)}
 .megumi-tail{position:absolute;top:100%;left:50%;transform:translateX(-50%);border:10px solid transparent;border-top-color:rgba(205,175,130,.35)}
 </style>
 <div class="yuji-float" id="yuji"><div class="yuji-bubble"><span class="yuji-tail"></span><div class="yuji-bubble-text"><span style="display:block;margin-bottom:12px">૮꒰ ˶• ༝ •˶꒱ა ♡</span>HELP YUJI FIND NANAMI</div><div class="yuji-btns"><button class="yuji-btn" onclick="window.yujiLeave()">leave yuji alone</button><button class="yuji-btn yuji-btn-primary" onclick="window.yujiFindNanami()">find nanami</button></div></div><img class="yuji-head" src="yujinew_smol.png" alt="Yuji"></div>
-<div class="megumi-float" id="megumi" style="right:400px;bottom:400px"><div class="megumi-bubble"><span class="megumi-tail"></span>Itadori?</div><img class="megumi-head" src="megumi.png" alt="Megumi"></div>
+<div class="megumi-float" id="megumi" style="left:0;top:0"><div class="megumi-bubble"><span class="megumi-tail"></span>Itadori?</div><img class="megumi-head" src="megumi.png" alt="Megumi"></div>
 <body>
 
 
@@ -149,9 +150,12 @@
         bubbleText.innerHTML='NANAMIN, ARE YOU HERE?!?';
       },6000);
 
-      // 7. at 9s (0:39 mark) megumi appears
+      // 7. at 9s (0:39 mark) megumi appears in bottom-right
       setTimeout(function(){
         var meg=document.getElementById('megumi');
+        // position in bottom-right within 400px padding
+        meg.style.left=(window.innerWidth-80-PAD)+'px';
+        meg.style.top=(window.innerHeight-80-PAD)+'px';
         meg.style.display='block';
         var megHead=meg.querySelector('.megumi-head');
         megHead.style.animation='yujiPop 0.4s ease-out';
@@ -159,7 +163,43 @@
         // show megumi bubble
         meg.querySelector('.megumi-bubble').style.opacity='1';
         meg.querySelector('.megumi-bubble').style.transform='translateX(-50%) scale(1)';
+
+        // at 13s (4s after megumi appears) megumi starts sliding toward center
+        setTimeout(function(){
+          // target: center + offset right (leave gap for nanami in middle)
+          var centerY=window.innerHeight/2-40;
+          var centerX=window.innerWidth/2+50;
+          meg.style.left=centerX+'px';
+          meg.style.top=centerY+'px';
+        },4000);
       },9000);
+
+      // 8. at 11s yuji text changes + second audio clip 0:50-0:56
+      // yuji also starts sliding to center-left (leave gap for nanami between them)
+      setTimeout(function(){
+        var audio2=new Audio('yuji-nanamin-call.mp3');
+        audio2.currentTime=50;
+        audio2.play();
+        setTimeout(function(){
+          var fadeInt2=setInterval(function(){
+            if(audio2.volume>0.05){audio2.volume=Math.max(0,audio2.volume-0.05)}
+            else{audio2.volume=0;audio2.pause();clearInterval(fadeInt2)}
+          },50);
+        },5500);
+
+        bubbleText.innerHTML='NA-NA-NA-NA-NA-NA-MIN!';
+
+        // slide yuji to center-left (leave ~100px gap for nanami icon in middle)
+        var centerY=window.innerHeight/2-36;
+        var centerX=window.innerWidth/2-122;
+        el.style.left=centerX+'px';
+        el.style.top=centerY+'px';
+
+        // after 4s change to "NA-NA-"
+        setTimeout(function(){
+          bubbleText.innerHTML='NA-NA-';
+        },4000);
+      },11000);
 
     },300);
   };
