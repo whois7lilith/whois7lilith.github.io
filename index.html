@@ -213,14 +213,13 @@
           megBubble.lastChild.textContent='( ｡ •̀ ᴖ •́ ｡)💢';
         },5000);
 
-        // 2s after appearing, megumi slides to yuji's side (16px gap)
+        // 2s after appearing, megumi slides to yuji's side (wide enough for both bubbles)
         setTimeout(function(){
           var yujiY=window.innerHeight/2-36;
-          var megTargetX=PAD+(isMobile?56:72)+16;
+          var megTargetX=PAD+(isMobile?56:72)+(isMobile?120:180);
           var megTargetY=yujiY-4;
           meg.style.left=megTargetX+'px';
           meg.style.top=megTargetY+'px';
-          // offset bubbles so they don't collide
           meg.querySelector('.megumi-bubble').classList.add('bubble-right');
         },2000);
       },9000);
@@ -259,10 +258,8 @@
             yujiHead.style.animation='yujiSway 1.2s ease-in-out infinite';
             megHead.style.animation='yujiSway 1.2s ease-in-out infinite';
           },500);
-        },4000);
 
-        // after 7s (audio stops at 0:58) nanami appears tripled size with star glow
-        setTimeout(function(){
+          // nanami appears tripled size with star glow
           var nana=document.getElementById('nanami');
           var nanaSize=isMobile?68*3:76*3;
           nana.style.left=(window.innerWidth/2-nanaSize/2)+'px';
@@ -277,109 +274,109 @@
             nanaHead.classList.add('nanami-glow');
           },500);
 
-          // 2s after nanami appears: Daddys Home fades in
+          // 1.5s after: Daddys Home fades in, dots text appears
           setTimeout(function(){
             var audio3=new Audio('Daddys%20Home.mp3');
             audio3.volume=0;
             audio3.play();
-
-            // song starts > dots text appears
-            bubbleText.innerHTML='.........';
-            var megBubble2=document.getElementById('megumi').querySelector('.megumi-bubble');
-            megBubble2.lastChild.textContent='.........';
-
-            // fade in over 1.5s
             var fadeIn3=setInterval(function(){
               if(audio3.volume<0.95){audio3.volume=Math.min(1,audio3.volume+0.03)}
               else{audio3.volume=1;clearInterval(fadeIn3)}
             },50);
-            // fade out starting at 8.5s (so it fades over 1.5s ending at 10s)
+
+            // dots text appears with song
+            bubbleText.innerHTML='....';
+            bubble.style.opacity='1';
+            var megBubble2=document.getElementById('megumi').querySelector('.megumi-bubble');
+            megBubble2.lastChild.textContent='....';
+            megBubble2.style.opacity='1';
+
+            // fade out starting at 6.5s (ending around 8s)
             setTimeout(function(){
               var fadeOut3=setInterval(function(){
                 if(audio3.volume>0.03){audio3.volume=Math.max(0,audio3.volume-0.03)}
                 else{audio3.volume=0;audio3.pause();clearInterval(fadeOut3)}
               },50);
-            },8500);
+            },6500);
 
-            // song finished > dots text disappears
+            // at 8s: dots disappear, daddy's home done
             setTimeout(function(){
               bubble.style.opacity='0';
               megBubble2.style.opacity='0';
-            },10000);
 
-            // after 10s (Daddys Home ends): happi happi starts
-            setTimeout(function(){
-              var audio4=new Audio('happi%20happi%20happi.mp3');
-              audio4.volume=0;
-              audio4.play();
-              // fade in over 1.5s
-              var fadeIn4=setInterval(function(){
-                if(audio4.volume<0.95){audio4.volume=Math.min(1,audio4.volume+0.03)}
-                else{audio4.volume=1;clearInterval(fadeIn4)}
-              },50);
-              // fade out starting at 18.5s (ending at 20s)
+              // happi happi starts
               setTimeout(function(){
-                var fadeOut4=setInterval(function(){
-                  if(audio4.volume>0.03){audio4.volume=Math.max(0,audio4.volume-0.03)}
-                  else{audio4.volume=0;audio4.pause();clearInterval(fadeOut4)}
+                var audio4=new Audio('happi%20happi%20happi.mp3');
+                audio4.volume=0;
+                audio4.play();
+                var fadeIn4=setInterval(function(){
+                  if(audio4.volume<0.95){audio4.volume=Math.min(1,audio4.volume+0.03)}
+                  else{audio4.volume=1;clearInterval(fadeIn4)}
                 },50);
-              },18500);
+                // fade out starting at 7.5s (ending around 9s)
+                setTimeout(function(){
+                  var fadeOut4=setInterval(function(){
+                    if(audio4.volume>0.03){audio4.volume=Math.max(0,audio4.volume-0.03)}
+                    else{audio4.volume=0;audio4.pause();clearInterval(fadeOut4)}
+                  },50);
+                },7500);
 
-              // reposition all 3 icons side by side centered, 20px gap
-              var gap=20;
-              var yujiSize=isMobile?56:72;
-              var megSize=isMobile?64:80;
-              var nanaSize=isMobile?68*3:76*3;
-              // nanami stays center, yuji to left, megumi to right
-              var totalW=yujiSize+gap+nanaSize+gap+megSize;
-              var startX=(window.innerWidth-totalW)/2;
-              var centerY=window.innerHeight/2;
+                // reload page after 10s
+                setTimeout(function(){
+                  window.location.reload();
+                },10000);
 
-              // show yuji and megumi bubbles with kaomoji
-              bubbleText.innerHTML='( ˶ˆᗜˆ˵ )';
-              bubble.classList.add('bubble-left');
-              bubble.style.opacity='1';
-              var megBub=document.getElementById('megumi').querySelector('.megumi-bubble');
-              megBub.lastChild.textContent='(¬`‸´¬)';
-              megBub.classList.add('bubble-right');
-              megBub.classList.add('bubble-right-show');
-              megBub.style.opacity='1';
+                // reposition all 3 icons side by side centered, 20px gap
+                var gap=20;
+                var yujiSz=isMobile?56:72;
+                var megSz=isMobile?64:80;
+                var nanaSz=isMobile?68*3:76*3;
+                var totalW=yujiSz+gap+nanaSz+gap+megSz;
+                var startX=(window.innerWidth-totalW)/2;
+                var cY=window.innerHeight/2;
+                var bottomY=cY+nanaSz/2;
 
-              // align all icons at bottom edge
-              var bottomY=centerY+nanaSize/2;
+                // show kaomoji
+                bubbleText.innerHTML='( ˶ˆᗜˆ˵ )';
+                bubble.classList.add('bubble-left');
+                bubble.style.opacity='1';
+                var megBub=document.getElementById('megumi').querySelector('.megumi-bubble');
+                megBub.lastChild.textContent='(¬`‸´¬)';
+                megBub.classList.add('bubble-right');
+                megBub.classList.add('bubble-right-show');
+                megBub.style.opacity='1';
 
-              // teleport yuji to left of nanami
-              el.style.transition='none';
-              el.style.opacity='0';
-              el.offsetHeight;
-              el.style.left=startX+'px';
-              el.style.top=(bottomY-yujiSize)+'px';
-              el.offsetHeight;
-              el.style.opacity='1';
-              var yujiH=el.querySelector('.yuji-head');
-              yujiH.style.animation='yujiPop 0.4s ease-out';
-              setTimeout(function(){yujiH.style.animation='excitedBounce 0.6s ease-in-out infinite'},400);
+                // teleport yuji to left of nanami
+                el.style.transition='none';
+                el.style.opacity='0';
+                el.offsetHeight;
+                el.style.left=startX+'px';
+                el.style.top=(bottomY-yujiSz)+'px';
+                el.offsetHeight;
+                el.style.opacity='1';
+                var yujiH=el.querySelector('.yuji-head');
+                yujiH.style.animation='yujiPop 0.4s ease-out';
+                setTimeout(function(){yujiH.style.animation='excitedBounce 0.6s ease-in-out infinite'},400);
 
-              // move nanami to center
-              var nana=document.getElementById('nanami');
-              nana.style.left=(startX+yujiSize+gap)+'px';
-              nana.style.top=(bottomY-nanaSize)+'px';
-              var nanaH=nana.querySelector('.nanami-head');
-              nanaH.style.animation='yujiBob 1.6s ease-in-out infinite';
+                // move nanami to center
+                nana.style.left=(startX+yujiSz+gap)+'px';
+                nana.style.top=(bottomY-nanaSz)+'px';
+                nanaHead.style.animation='yujiBob 1.6s ease-in-out infinite';
 
-              // teleport megumi to right of nanami
-              var meg=document.getElementById('megumi');
-              meg.style.transition='none';
-              meg.offsetHeight;
-              meg.style.left=(startX+yujiSize+gap+nanaSize+gap)+'px';
-              meg.style.top=(bottomY-megSize)+'px';
-              var megH=meg.querySelector('.megumi-head');
-              megH.style.animation='yujiPop 0.4s ease-out';
-              setTimeout(function(){megH.style.animation='excitedBounce 0.6s ease-in-out infinite'},400);
+                // teleport megumi to right of nanami
+                var meg=document.getElementById('megumi');
+                meg.style.transition='none';
+                meg.offsetHeight;
+                meg.style.left=(startX+yujiSz+gap+nanaSz+gap)+'px';
+                meg.style.top=(bottomY-megSz)+'px';
+                var megH=meg.querySelector('.megumi-head');
+                megH.style.animation='yujiPop 0.4s ease-out';
+                setTimeout(function(){megH.style.animation='excitedBounce 0.6s ease-in-out infinite'},400);
 
-            },10000);
-          },2000);
-        },7000);
+              },1000);
+            },8000);
+          },1500);
+        },6000);
 
       },11000);
 
