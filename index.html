@@ -30,8 +30,16 @@
 .yuji-btn:hover{background:rgba(255,255,255,.45);border-color:rgba(224,170,216,.8);transform:translateY(-1px)}
 .yuji-btn-primary{background:rgba(200,130,185,.7);color:#fff;border-color:rgba(200,130,185,.8);text-transform:uppercase}
 .yuji-btn-primary:hover{background:rgba(200,130,185,.85);border-color:rgba(200,130,185,1)}
+
+.megumi-float{position:fixed;z-index:9998;pointer-events:none;display:none}
+.megumi-head{width:72px;height:72px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.25))}
+.megumi-bubble{position:absolute;bottom:calc(100% + 14px);left:50%;transform:translateX(-50%) scale(.7);background:rgba(242,210,228,.45);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1.5px solid rgba(205,175,130,.45);color:#4a3f6b;font-family:system-ui,sans-serif;font-size:13px;line-height:1.4;padding:40px;border-radius:12px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease;box-shadow:0 4px 20px rgba(0,0,0,.08);text-align:center;overflow:visible;font-weight:500}
+.megumi-bubble::before{content:'✦';position:absolute;top:8px;left:10px;font-size:10px;color:rgba(205,175,130,.55)}
+.megumi-bubble::after{content:'✦';position:absolute;top:8px;right:10px;font-size:10px;color:rgba(205,175,130,.55)}
+.megumi-tail{position:absolute;top:100%;left:50%;transform:translateX(-50%);border:10px solid transparent;border-top-color:rgba(205,175,130,.35)}
 </style>
 <div class="yuji-float" id="yuji"><div class="yuji-bubble"><span class="yuji-tail"></span><div class="yuji-bubble-text"><span style="display:block;margin-bottom:12px">૮꒰ ˶• ༝ •˶꒱ა ♡</span>HELP YUJI FIND NANAMI</div><div class="yuji-btns"><button class="yuji-btn" onclick="window.yujiLeave()">leave yuji alone</button><button class="yuji-btn yuji-btn-primary" onclick="window.yujiFindNanami()">find nanami</button></div></div><img class="yuji-head" src="yujinew_smol.png" alt="Yuji"></div>
+<div class="megumi-float" id="megumi" style="right:400px;bottom:400px"><div class="megumi-bubble"><span class="megumi-tail"></span>Itadori?</div><img class="megumi-head" src="megumi.png" alt="Megumi"></div>
 <body>
 
 
@@ -100,7 +108,7 @@
 
     // pre-create audio in click context for autoplay policy
     var audio=new Audio('yuji-nanamin-call.mp3');
-    audio.currentTime=29;
+    audio.currentTime=30;
 
     // 3. teleport to left-middle with pop
     setTimeout(function(){
@@ -125,14 +133,33 @@
       bubble.style.padding='40px';
       el.classList.add('paused');
 
-      // 5. play audio clip from 0:29 to 0:38
+      // 5. play audio from 0:30, fade out at 0:39, stop at 0:40
+      audio.volume=1;
       audio.play();
-      setTimeout(function(){audio.pause()},9000);
+      // fade out starting at 9s (0:39)
+      setTimeout(function(){
+        var fadeInt=setInterval(function(){
+          if(audio.volume>0.05){audio.volume=Math.max(0,audio.volume-0.05)}
+          else{audio.volume=0;audio.pause();clearInterval(fadeInt)}
+        },50);
+      },9000);
 
       // 6. after 6s replace text
       setTimeout(function(){
         bubbleText.innerHTML='NANAMIN, ARE YOU HERE?!?';
       },6000);
+
+      // 7. at 9s (0:39 mark) megumi appears
+      setTimeout(function(){
+        var meg=document.getElementById('megumi');
+        meg.style.display='block';
+        var megHead=meg.querySelector('.megumi-head');
+        megHead.style.animation='yujiPop 0.4s ease-out';
+        setTimeout(function(){megHead.style.animation='yujiBob 1.6s ease-in-out infinite'},400);
+        // show megumi bubble
+        meg.querySelector('.megumi-bubble').style.opacity='1';
+        meg.querySelector('.megumi-bubble').style.transform='translateX(-50%) scale(1)';
+      },9000);
 
     },300);
   };
