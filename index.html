@@ -33,21 +33,16 @@
 .yuji-btn-primary:hover{background:rgba(200,130,185,.85);border-color:rgba(200,130,185,1)}
 
 .megumi-float{position:fixed;z-index:9998;pointer-events:none;display:none;transition:right 3s ease-in-out,bottom 3s ease-in-out,top 3s ease-in-out,left 3s ease-in-out}
-.megumi-head{width:80px;height:80px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.25))}
+.megumi-head{width:72px;height:72px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.25))}
 .megumi-bubble{position:absolute;bottom:calc(100% + 14px);left:50%;transform:translateX(-50%) scale(.7);background:rgba(242,210,228,.45);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1.5px solid rgba(205,175,130,.45);color:#4a3f6b;font-family:system-ui,sans-serif;font-size:13px;line-height:1.4;padding:40px;border-radius:12px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease;box-shadow:0 4px 20px rgba(0,0,0,.08);text-align:center;overflow:visible;font-weight:500}
 .megumi-bubble::before{content:'✦';position:absolute;top:8px;left:10px;font-size:10px;color:rgba(205,175,130,.55)}
 .megumi-bubble::after{content:'✦';position:absolute;top:8px;right:10px;font-size:10px;color:rgba(205,175,130,.55)}
 .megumi-tail{position:absolute;top:100%;left:50%;transform:translateX(-50%);border:10px solid transparent;border-top-color:rgba(205,175,130,.35)}
 
-.yuji-bubble.bubble-left{left:0;transform:translateX(0) scale(.7)}
-.yuji-float:hover .yuji-bubble.bubble-left,.yuji-float.paused .yuji-bubble.bubble-left,.yuji-float.yuji-searching .yuji-bubble.bubble-left{transform:translateX(0) scale(1)}
-.megumi-bubble.bubble-right{left:auto;right:0;transform:translateX(0) scale(.7)}
-.megumi-bubble.bubble-right-show{transform:translateX(0) scale(1) !important}
-
 @media(max-width:768px){
 .yuji-head{width:56px;height:56px}
-.megumi-head{width:64px;height:64px}
-.nanami-head{width:68px;height:68px}
+.megumi-head{width:56px;height:56px}
+.nanami-head{width:56px;height:56px}
 .yuji-bubble{padding:20px 14px;font-size:11px}
 .megumi-bubble{padding:24px;font-size:11px}
 .yuji-btn{font-size:11px;padding:5px 10px}
@@ -55,7 +50,7 @@
 }
 
 .nanami-float{position:fixed;z-index:9997;pointer-events:none;display:none}
-.nanami-head{width:76px;height:76px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.25))}
+.nanami-head{width:72px;height:72px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.25))}
 .nanami-glow{animation:nanamiGlow 2s ease-in-out infinite}
 @keyframes nanamiGlow{0%,100%{filter:drop-shadow(0 0 15px rgba(205,175,130,.4)) drop-shadow(0 0 40px rgba(242,210,228,.25)) drop-shadow(0 0 80px rgba(255,255,255,.1))}50%{filter:drop-shadow(0 0 30px rgba(205,175,130,.7)) drop-shadow(0 0 60px rgba(242,210,228,.5)) drop-shadow(0 0 120px rgba(255,255,255,.2))}}
 @keyframes surpriseLook{0%{transform:scale(1) translateX(0)}15%{transform:scale(1.2) translateX(6px)}30%{transform:scale(0.95) translateX(4px)}50%{transform:scale(1.05) translateX(5px)}100%{transform:scale(1) translateX(3px)}}
@@ -191,12 +186,15 @@
       // 6. after 5s replace text
       setTimeout(function(){
         bubbleText.innerHTML='NANAMIN, ARE YOU HERE?!?';
+        setTimeout(function(){
+          bubble.style.setProperty('opacity','0','important');
+        },2000);
       },5000);
 
       // 7. at 9s (0:39 mark) megumi appears in bottom-right
       setTimeout(function(){
         var meg=document.getElementById('megumi');
-        var megSize=isMobile?64:80;
+        var megSize=isMobile?56:72;
         meg.style.left=(window.innerWidth-megSize-PAD)+'px';
         meg.style.top=(window.innerHeight-megSize-PAD)+'px';
         meg.style.display='block';
@@ -207,8 +205,13 @@
         meg.querySelector('.megumi-bubble').style.opacity='1';
         meg.querySelector('.megumi-bubble').style.transform='translateX(-50%) scale(1)';
 
-        // after 5s change megumi text
+        // after 4s hide megumi bubble
         var megBubble=meg.querySelector('.megumi-bubble');
+        setTimeout(function(){
+          megBubble.style.opacity='0';
+        },4000);
+
+        // after 5s change megumi text
         setTimeout(function(){
           megBubble.lastChild.textContent='( ｡ •̀ ᴖ •́ ｡)💢';
         },5000);
@@ -220,7 +223,6 @@
           var megTargetY=yujiY-4;
           meg.style.left=megTargetX+'px';
           meg.style.top=megTargetY+'px';
-          meg.querySelector('.megumi-bubble').classList.add('bubble-right');
         },2000);
       },9000);
 
@@ -261,7 +263,7 @@
 
           // nanami appears tripled size with star glow
           var nana=document.getElementById('nanami');
-          var nanaSize=isMobile?68*3:76*3;
+          var nanaSize=isMobile?56*3:72*3;
           nana.style.left=(window.innerWidth/2-nanaSize/2)+'px';
           nana.style.top=(window.innerHeight/2-nanaSize/2)+'px';
           nana.style.display='block';
@@ -329,8 +331,8 @@
                 // reposition all 3 icons side by side centered, 20px gap
                 var gap=20;
                 var yujiSz=isMobile?56:72;
-                var megSz=isMobile?64:80;
-                var nanaSz=isMobile?68*3:76*3;
+                var megSz=isMobile?56:72;
+                var nanaSz=isMobile?56*3:72*3;
                 var totalW=yujiSz+gap+nanaSz+gap+megSz;
                 var startX=(window.innerWidth-totalW)/2;
                 var cY=window.innerHeight/2;
@@ -338,12 +340,9 @@
 
                 // show kaomoji
                 bubbleText.innerHTML='( ˶ˆᗜˆ˵ )';
-                bubble.classList.add('bubble-left');
                 bubble.style.opacity='1';
                 var megBub=document.getElementById('megumi').querySelector('.megumi-bubble');
                 megBub.lastChild.textContent='(¬`‸´¬)';
-                megBub.classList.add('bubble-right');
-                megBub.classList.add('bubble-right-show');
                 megBub.style.opacity='1';
 
                 // teleport yuji to left of nanami
@@ -358,9 +357,12 @@
                 yujiH.style.animation='yujiPop 0.4s ease-out';
                 setTimeout(function(){yujiH.style.animation='excitedBounce 0.6s ease-in-out infinite'},400);
 
-                // move nanami to center
+                // move nanami to center + swap to nanamismol icon
                 nana.style.left=(startX+yujiSz+gap)+'px';
                 nana.style.top=(bottomY-nanaSz)+'px';
+                nanaHead.src='nanamismol.png';
+                nanaHead.style.width=nanaSz+'px';
+                nanaHead.style.height=nanaSz+'px';
                 nanaHead.style.animation='yujiBob 1.6s ease-in-out infinite';
 
                 // teleport megumi to right of nanami
