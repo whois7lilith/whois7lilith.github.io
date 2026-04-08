@@ -97,8 +97,9 @@
       var right=Math.max(r1.right,r2.right)+SAFE;
       var bottom=Math.max(r1.bottom,r2.bottom)+SAFE;
       var inside=e.clientX>=left&&e.clientX<=right&&e.clientY>=top&&e.clientY<=bottom;
-      if(inside&&!paused){paused=true;el.classList.add('paused')}
+      if(inside&&!paused&&!dismissed){paused=true;el.classList.add('paused')}
       if(!inside&&paused&&!locked){paused=false;el.classList.remove('paused')}
+      if(!inside){dismissed=false}
     });
   }
 
@@ -121,7 +122,9 @@
   step();
 
   // leave yuji alone: close bubble, resume floating
+  var dismissed=false;
   window.yujiLeave=function(){
+    dismissed=true;
     paused=false;
     el.classList.remove('paused');
   };
@@ -213,6 +216,23 @@
         var megBubble=meg.querySelector('.megumi-bubble');
         setTimeout(function(){
           megBubble.style.opacity='0';
+
+          // after 1s show new text
+          setTimeout(function(){
+            megBubble.lastChild.textContent='(≖_≖) this is annoying..';
+            megBubble.style.opacity='1';
+
+            // after 4s change text
+            setTimeout(function(){
+              megBubble.lastChild.textContent='still... should i help him?';
+
+              // after 4s show CTA bubble
+              setTimeout(function(){
+                megBubble.innerHTML='<span class="megumi-tail"></span><div style="margin-bottom:16px;font-weight:500">what should megumi do?</div><div class="yuji-btns"><button class="yuji-btn" onclick="window.megHelp()">help yuji</button><button class="yuji-btn" onclick="window.megIgnore()">ignore yuji</button></div>';
+                megBubble.style.opacity='1';
+              },4000);
+            },4000);
+          },1000);
         },3000);
       },9000);
 
