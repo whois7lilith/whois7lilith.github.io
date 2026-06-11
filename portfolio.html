@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>portfolio. — Lilith, product designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF3E4;
+    --red:#E73229;
+    --wall:#F5A9BD;
+    --panel:#FBD6DE;
+    --cobalt:#3367C9;
+    --sky:#7FB6E8;
+    --marigold:#F4A93C;
+    --ink:#161412;
+    --leaf:#4E9D62;
+    --line:2.5px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Space Mono",monospace;
+  }
+
+  .hero{
+    display:grid;
+    grid-template-columns:56% 44%;
+    height:100vh;
+    height:100dvh;
+  }
+
+  /* ---------- LEFT: tilted illustrated scene ---------- */
+  .scene-clip{
+    position:relative;
+    /* diagonal seam like the reference: red layer behind, pink layer clipped 10px tighter */
+    clip-path:polygon(0 0, 100% 0, 86% 100%, 0 100%);
+    background:var(--red);
+  }
+  .scene-wrap{
+    position:absolute;
+    inset:0;
+    overflow:hidden;
+    clip-path:polygon(0 0, calc(100% - 10px) 0, calc(86% - 10px) 100%, 0 100%);
+  }
+  .scene{
+    position:absolute;
+    inset:-12% -6% -8% -10%;
+    background:var(--wall);
+    transform:rotate(-5deg);
+  }
+  /* wall texture: sparse hand-placed dots */
+  .scene::before{
+    content:"";
+    position:absolute;inset:0;
+    background-image:radial-gradient(rgba(255,255,255,.35) 1.5px, transparent 1.6px);
+    background-size:90px 90px;
+    background-position:22px 35px;
+  }
+
+  .doodle{position:absolute}
+  .doodle svg{display:block;width:100%;height:auto}
+
+  /* layout of props inside the tilted wall (percentages of scene box) */
+  .d-window  {left:4%;  top:10%;  width:24%;}
+  .d-disco   {left:33%; top:6%;   width:9%;}
+  .d-shelf   {left:46%; top:9%;   width:30%;}
+  .d-calendar{left:50%; top:34%;  width:14%;}
+  .d-swatch  {left:68%; top:30%;  width:13%;}
+  .d-clock   {left:80%; top:8%;   width:11%;}
+  .d-cursor  {left:38%; top:42%;  width:8%;}
+  .d-pin     {left:66%; top:56%;  width:7%;}
+  .d-star1   {left:30%; top:26%;  width:4%;}
+  .d-star2   {left:78%; top:50%;  width:3.5%;}
+  .d-star3   {left:10%; top:48%;  width:3%;}
+
+  /* Lilith cutout: white sticker outline so the photo sits in the illustration */
+  .me{
+    position:absolute;
+    left:50%;
+    bottom:0;
+    transform:translateX(-58%) rotate(5deg); /* counter the wall tilt back upright-ish */
+    width:min(46%, 430px);
+    z-index:5;
+  }
+  .me img{
+    display:block;width:100%;height:auto;
+    filter:
+      drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff)
+      drop-shadow(0 3px 0 #fff) drop-shadow(0 -3px 0 #fff)
+      drop-shadow(2px 2px 0 #fff) drop-shadow(-2px -2px 0 #fff)
+      drop-shadow(10px 14px 0 rgba(22,20,18,.18));
+  }
+
+  /* ---------- RIGHT: wordmark ---------- */
+  .intro{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:4vh 5vw 4vh 2vw;
+    gap:3.2vh;
+  }
+  .wordmark{
+    font-family:"Abril Fatface",serif;
+    font-size:clamp(64px, 11.5vw, 178px);
+    line-height:.84;
+    color:var(--red);
+    letter-spacing:-.01em;
+    user-select:none;
+  }
+  .wordmark .row{display:block}
+  .wordmark .dot{color:var(--cobalt)}
+  .byline{
+    font-size:clamp(13px, 1.35vw, 20px);
+    letter-spacing:.02em;
+  }
+  .byline b{font-weight:700}
+
+  /* ---------- Yuji: drifts around, no interaction ---------- */
+  .yuji-x{position:fixed;left:0;top:0;z-index:50;pointer-events:none;transform:translateX(85vw)}
+  .yuji-y{position:relative;transform:translateY(76vh)}
+  .yuji-x img{
+    width:64px;height:auto;display:block;
+    filter:drop-shadow(0 3px 7px rgba(22,20,18,.25));
+  }
+
+  /* ---------- motion ---------- */
+  @keyframes driftX{
+    0%{transform:translateX(6vw)}
+    30%{transform:translateX(70vw)}
+    55%{transform:translateX(38vw)}
+    80%{transform:translateX(82vw)}
+    100%{transform:translateX(12vw)}
+  }
+  @keyframes driftY{
+    0%{transform:translateY(70vh)}
+    25%{transform:translateY(14vh)}
+    50%{transform:translateY(58vh)}
+    75%{transform:translateY(22vh)}
+    100%{transform:translateY(66vh)}
+  }
+  @keyframes bob{
+    0%,100%{transform:translateY(0) rotate(-4deg)}
+    50%{transform:translateY(-9px) rotate(4deg)}
+  }
+  .yuji-x{animation:driftX 47s ease-in-out infinite}
+  .yuji-y{animation:driftY 31s ease-in-out infinite}
+  .yuji-x img{animation:bob 2.4s ease-in-out infinite}
+
+  @keyframes sway{
+    0%,100%{transform:rotate(-2.5deg)}
+    50%{transform:rotate(2.5deg)}
+  }
+  .swing{transform-origin:50% -20px;animation:sway 4.5s ease-in-out infinite}
+  .swing.slow{animation-duration:6.5s}
+
+  @keyframes popIn{
+    from{opacity:0;transform:translateY(14px) scale(.92)}
+    to{opacity:1;transform:translateY(0) scale(1)}
+  }
+  .doodle{animation:popIn .55s cubic-bezier(.2,.9,.3,1.2) backwards}
+  .d-window{animation-delay:.05s}.d-shelf{animation-delay:.12s}
+  .d-disco{animation-delay:.2s}.d-clock{animation-delay:.26s}
+  .d-calendar{animation-delay:.32s}.d-swatch{animation-delay:.38s}
+  .d-cursor{animation-delay:.44s}.d-pin{animation-delay:.5s}
+  .d-star1{animation-delay:.55s}.d-star2{animation-delay:.6s}.d-star3{animation-delay:.65s}
+
+  @keyframes riseUp{
+    from{opacity:0;transform:translateX(-58%) rotate(5deg) translateY(40px)}
+    to{opacity:1;transform:translateX(-58%) rotate(5deg) translateY(0)}
+  }
+  .me{animation:riseUp .7s ease-out .25s backwards}
+
+  @keyframes lineIn{
+    from{opacity:0;transform:translateY(.35em) rotate(1.5deg)}
+    to{opacity:1;transform:translateY(0) rotate(0)}
+  }
+  .wordmark .row{animation:lineIn .6s cubic-bezier(.2,.9,.3,1.15) backwards}
+  .wordmark .row:nth-child(2){animation-delay:.12s}
+  .byline{animation:lineIn .6s ease-out .35s backwards}
+
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important}
+  }
+
+  /* ---------- mobile ---------- */
+  @media (max-width:760px){
+    .hero{grid-template-columns:1fr;grid-template-rows:58vh auto;height:auto;min-height:100dvh}
+    .scene-clip{clip-path:polygon(0 0,100% 0,100% 88%,0 100%)}
+    .scene-wrap{clip-path:polygon(0 0,100% 0,100% calc(88% - 10px),0 calc(100% - 10px))}
+    .scene{inset:-14% -10% -10% -10%}
+    .me{width:min(62%,330px);transform:translateX(-54%) rotate(5deg)}
+    @keyframes riseUp{
+      from{opacity:0;transform:translateX(-54%) rotate(5deg) translateY(40px)}
+      to{opacity:1;transform:translateX(-54%) rotate(5deg) translateY(0)}
+    }
+    .intro{padding:5vh 6vw 9vh}
+    .wordmark{font-size:clamp(84px,24vw,140px)}
+    .yuji-x img{width:50px}
+  }
+</style>
+</head>
+<body>
+
+<main class="hero">
+
+  <!-- ============ illustrated scene ============ -->
+  <section class="scene-clip" aria-label="Illustrated workspace with a photo of Lilith">
+    <div class="scene-wrap">
+    <div class="scene">
+
+      <!-- window with clouds -->
+      <div class="doodle d-window">
+        <svg viewBox="0 0 200 150">
+          <rect x="6" y="6" width="188" height="138" rx="10" fill="var(--sky)" stroke="var(--ink)" stroke-width="5"/>
+          <path d="M20 95c14-10 30-8 38 0 6-14 28-16 38-6 4-10 22-12 30-4 8-6 22-4 28 4v45c0 6-4 10-10 10H30c-6 0-10-4-10-10z" fill="#fff" opacity=".95"/>
+          <path d="M30 38c10-8 24-6 30 0 5-9 21-10 28-3" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity=".9"/>
+          <line x1="100" y1="8" x2="100" y2="142" stroke="var(--ink)" stroke-width="5"/>
+          <line x1="8" y1="75" x2="192" y2="75" stroke="var(--ink)" stroke-width="5"/>
+        </svg>
+      </div>
+
+      <!-- disco ball (from her actual room!) -->
+      <div class="doodle d-disco swing">
+        <svg viewBox="0 0 80 110">
+          <line x1="40" y1="0" x2="40" y2="26" stroke="var(--ink)" stroke-width="3.5"/>
+          <circle cx="40" cy="64" r="36" fill="#CFE3F2" stroke="var(--ink)" stroke-width="4"/>
+          <path d="M12 50h56M8 64h64M12 78h56M22 90h36" stroke="var(--ink)" stroke-width="2.5" fill="none"/>
+          <path d="M28 30v66M40 28v72M52 30v66" stroke="var(--ink)" stroke-width="2.5"/>
+          <rect x="14" y="44" width="12" height="9" fill="#fff"/>
+          <rect x="44" y="56" width="12" height="9" fill="#fff"/>
+          <rect x="30" y="70" width="12" height="9" fill="var(--marigold)"/>
+          <rect x="50" y="80" width="10" height="8" fill="#fff"/>
+        </svg>
+      </div>
+
+      <!-- shelf with pothos + pots -->
+      <div class="doodle d-shelf">
+        <svg viewBox="0 0 320 170">
+          <rect x="8" y="96" width="304" height="14" rx="4" fill="#C98A4B" stroke="var(--ink)" stroke-width="4"/>
+          <!-- yellow pot -->
+          <path d="M34 96l6-30h34l6 30z" fill="var(--marigold)" stroke="var(--ink)" stroke-width="4"/>
+          <path d="M44 64c-2-12 4-22 13-26M57 64c0-10 6-18 14-20M70 64c4-8 12-12 18-12" stroke="var(--leaf)" stroke-width="6" fill="none" stroke-linecap="round"/>
+          <!-- green pot, trailing vine -->
+          <path d="M196 96l6-34h44l6 34z" fill="var(--leaf)" stroke="var(--ink)" stroke-width="4"/>
+          <path d="M224 62c-4-12 2-22 12-26" stroke="var(--leaf)" stroke-width="6" fill="none" stroke-linecap="round"/>
+          <path d="M206 96c-10 18-6 38 4 52M250 96c12 16 10 34 2 48" stroke="var(--leaf)" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <ellipse cx="206" cy="120" rx="9" ry="6" fill="var(--leaf)" stroke="var(--ink)" stroke-width="3" transform="rotate(-30 206 120)"/>
+          <ellipse cx="212" cy="142" rx="9" ry="6" fill="var(--leaf)" stroke="var(--ink)" stroke-width="3" transform="rotate(-15 212 142)"/>
+          <ellipse cx="254" cy="116" rx="9" ry="6" fill="var(--leaf)" stroke="var(--ink)" stroke-width="3" transform="rotate(28 254 116)"/>
+          <ellipse cx="250" cy="138" rx="9" ry="6" fill="var(--leaf)" stroke="var(--ink)" stroke-width="3" transform="rotate(14 250 138)"/>
+          <!-- tiny frame -->
+          <rect x="124" y="56" width="46" height="40" rx="4" fill="#fff" stroke="var(--ink)" stroke-width="4"/>
+          <circle cx="140" cy="72" r="6" fill="var(--red)"/>
+          <path d="M128 90l12-12 8 8 10-12 8 16z" fill="var(--cobalt)"/>
+        </svg>
+      </div>
+
+      <!-- calendar: 06 / june -->
+      <div class="doodle d-calendar">
+        <svg viewBox="0 0 150 170">
+          <rect x="6" y="18" width="138" height="146" rx="10" fill="#fff" stroke="var(--ink)" stroke-width="5"/>
+          <rect x="6" y="18" width="138" height="52" rx="10" fill="var(--cobalt)" stroke="var(--ink)" stroke-width="5"/>
+          <rect x="6" y="58" width="138" height="12" fill="var(--cobalt)"/>
+          <circle cx="38" cy="18" r="7" fill="var(--paper)" stroke="var(--ink)" stroke-width="4"/>
+          <circle cx="112" cy="18" r="7" fill="var(--paper)" stroke="var(--ink)" stroke-width="4"/>
+          <text x="75" y="58" font-family="Abril Fatface,serif" font-size="36" fill="var(--paper)" text-anchor="middle">06</text>
+          <g stroke="var(--ink)" stroke-width="2.5">
+            <line x1="22" y1="92" x2="128" y2="92"/><line x1="22" y1="114" x2="128" y2="114"/><line x1="22" y1="136" x2="128" y2="136"/>
+            <line x1="49" y1="80" x2="49" y2="148"/><line x1="75" y1="80" x2="75" y2="148"/><line x1="101" y1="80" x2="101" y2="148"/>
+          </g>
+          <path d="M28 98l12 10M40 98l-12 10" stroke="var(--red)" stroke-width="3" stroke-linecap="round"/>
+          <path d="M55 98l12 10M67 98l-12 10" stroke="var(--red)" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="114" cy="125" r="9" fill="none" stroke="var(--red)" stroke-width="3"/>
+        </svg>
+      </div>
+
+      <!-- color swatch sheet (designer's dot chart, like the reference) -->
+      <div class="doodle d-swatch">
+        <svg viewBox="0 0 130 170">
+          <rect x="6" y="6" width="118" height="158" rx="6" fill="#fff" stroke="var(--ink)" stroke-width="4.5"/>
+          <rect x="20" y="18" width="60" height="9" rx="4" fill="var(--ink)" opacity=".85"/>
+          <g>
+            <circle cx="30" cy="50" r="8" fill="var(--red)"/><circle cx="58" cy="50" r="8" fill="var(--cobalt)"/><circle cx="86" cy="50" r="8" fill="var(--marigold)"/>
+            <circle cx="30" cy="78" r="8" fill="var(--wall)"/><circle cx="58" cy="78" r="8" fill="var(--leaf)"/><circle cx="86" cy="78" r="8" fill="var(--sky)"/>
+            <circle cx="30" cy="106" r="8" fill="var(--ink)"/><circle cx="58" cy="106" r="8" fill="#fff" stroke="var(--ink)" stroke-width="2.5"/><circle cx="86" cy="106" r="8" fill="var(--red)"/>
+            <circle cx="30" cy="134" r="8" fill="var(--cobalt)"/><circle cx="58" cy="134" r="8" fill="var(--marigold)"/><circle cx="86" cy="134" r="8" fill="var(--wall)"/>
+          </g>
+          <path d="M104 44l8 8M112 44l-8 8" stroke="var(--red)" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <!-- winged clock -->
+      <div class="doodle d-clock swing slow">
+        <svg viewBox="0 0 150 110">
+          <path d="M38 52c-14-2-26 2-32 10 10 2 18 0 26 -4" fill="var(--marigold)" stroke="var(--ink)" stroke-width="4" stroke-linejoin="round"/>
+          <path d="M112 52c14-2 26 2 32 10-10 2-18 0-26-4" fill="var(--marigold)" stroke="var(--ink)" stroke-width="4" stroke-linejoin="round"/>
+          <circle cx="75" cy="58" r="40" fill="#fff" stroke="var(--ink)" stroke-width="5"/>
+          <circle cx="75" cy="58" r="31" fill="none" stroke="var(--cobalt)" stroke-width="3"/>
+          <path d="M75 58V36M75 58l16 10" stroke="var(--ink)" stroke-width="4.5" stroke-linecap="round"/>
+          <circle cx="75" cy="58" r="4" fill="var(--red)"/>
+        </svg>
+      </div>
+
+      <!-- product-designer doodads: cursor + comment pin -->
+      <div class="doodle d-cursor">
+        <svg viewBox="0 0 80 80">
+          <path d="M16 10l14 52 10-20 22-6z" fill="#fff" stroke="var(--ink)" stroke-width="4.5" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="doodle d-pin">
+        <svg viewBox="0 0 80 90">
+          <path d="M40 8a28 28 0 0 1 28 28c0 16-13 26-28 44C25 62 12 52 12 36A28 28 0 0 1 40 8z" fill="var(--cobalt)" stroke="var(--ink)" stroke-width="4.5"/>
+          <circle cx="40" cy="36" r="9" fill="#fff"/>
+        </svg>
+      </div>
+
+      <!-- stars -->
+      <div class="doodle d-star1"><svg viewBox="0 0 40 40"><path d="M20 2l4 14 14 4-14 4-4 14-4-14-14-4 14-4z" fill="var(--marigold)" stroke="var(--ink)" stroke-width="2.5" stroke-linejoin="round"/></svg></div>
+      <div class="doodle d-star2"><svg viewBox="0 0 40 40"><path d="M20 2l4 14 14 4-14 4-4 14-4-14-14-4 14-4z" fill="#fff" stroke="var(--ink)" stroke-width="2.5" stroke-linejoin="round"/></svg></div>
+      <div class="doodle d-star3"><svg viewBox="0 0 40 40"><path d="M20 2l4 14 14 4-14 4-4 14-4-14-14-4 14-4z" fill="var(--red)" stroke="var(--ink)" stroke-width="2.5" stroke-linejoin="round"/></svg></div>
+
+      <!-- Lilith -->
+      <figure class="me">
+        <img src="lilith-cutout.png" alt="Lilith, in her workspace, holding her phone">
+      </figure>
+
+    </div>
+    </div>
+  </section>
+
+  <!-- ============ wordmark ============ -->
+  <section class="intro">
+    <h1 class="wordmark" aria-label="portfolio.">
+      <span class="row">port</span>
+      <span class="row">folio<span class="dot">.</span></span>
+    </h1>
+    <p class="byline"><b>Lilith</b>, product designer</p>
+  </section>
+
+</main>
+
+<!-- Yuji cameo: drifts around the page, no interaction -->
+<div class="yuji-x" aria-hidden="true">
+  <div class="yuji-y">
+    <img src="yujinew_smol.png" alt="">
+  </div>
+</div>
+
+</body>
+</html>
