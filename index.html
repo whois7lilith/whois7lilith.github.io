@@ -1,245 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>lilith.work</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>lilith.work</title>
 </head>
-    <!-- yuji floating head easter egg -->
-<style>
-.yuji-float{position:fixed;z-index:9999;pointer-events:auto;cursor:pointer;transition:none;padding-top:14px}
-.yuji-float.paused .yuji-head{animation:yujiSway 1.2s ease-in-out infinite}
-.yuji-head{width:72px;height:72px;animation:yujiBob 1.6s ease-in-out infinite;filter:drop-shadow(0 2px 8px rgba(0,0,0,.25));transition:transform .2s ease}
-.yuji-float:hover .yuji-head{transform:scale(1.055)}
-@keyframes yujiBob{0%,100%{transform:translateY(0)}20%{transform:translateY(-6px)}40%{transform:translateY(0)}55%{transform:translateY(-3px)}70%{transform:translateY(0)}}
-@keyframes yujiSway{0%,100%{transform:translateX(0)}50%{transform:translateX(5px)}}
-@keyframes yujiPop{0%{transform:scale(0)}50%{transform:scale(1.3)}100%{transform:scale(1)}}
-
-.yuji-bubble{position:absolute;bottom:calc(100% + 14px);left:50%;transform:translateX(-50%) scale(.7);background:rgba(242,210,228,.45);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1.5px solid rgba(205,175,130,.45);color:#4a3f6b;font-family:system-ui,sans-serif;font-size:13px;line-height:1.4;padding:32px 20px;border-radius:12px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease;box-shadow:0 4px 20px rgba(0,0,0,.08);text-align:center;overflow:visible}
-.yuji-bubble::before{content:'✦';position:absolute;top:8px;left:10px;font-size:10px;color:rgba(205,175,130,.55)}
-.yuji-bubble::after{content:'✦';position:absolute;top:8px;right:10px;font-size:10px;color:rgba(205,175,130,.55)}
-.yuji-bubble-text{margin-bottom:24px;font-weight:500;position:relative}
-.yuji-bubble-text::before{content:'✦';position:absolute;bottom:-2px;left:-14px;font-size:8px;color:rgba(205,175,130,.45)}
-.yuji-bubble-text::after{content:'✦';position:absolute;bottom:-2px;right:-14px;font-size:8px;color:rgba(205,175,130,.45)}
-.yuji-tail{position:absolute;top:100%;left:50%;transform:translateX(-50%);border:10px solid transparent;border-top-color:rgba(205,175,130,.35)}
-.yuji-float:hover .yuji-bubble,.yuji-float.paused .yuji-bubble{opacity:1;transform:translateX(-50%) scale(1);pointer-events:auto}
-.yuji-float.yuji-searching{transition:left 3s ease-in-out,top 3s ease-in-out}
-.yuji-float.yuji-searching .yuji-bubble{opacity:1;transform:translateX(-50%) scale(1);pointer-events:auto}
-.yuji-btns{display:flex;gap:8px;justify-content:center}
-.yuji-btn{padding:6px 14px;border-radius:8px;border:2px solid rgba(224,170,216,.6);background:rgba(255,255,255,.25);color:#5a4f7b;font-family:system-ui,sans-serif;font-size:13px;font-weight:700;letter-spacing:.5px;text-transform:none;cursor:pointer;transition:all .2s ease;box-shadow:0 2px 6px rgba(0,0,0,.06)}
-.yuji-btn:hover{background:rgba(255,255,255,.45);border-color:rgba(224,170,216,.8);transform:translateY(-1px)}
-.yuji-btn-primary{background:rgba(200,130,185,.7);color:#fff;border-color:rgba(200,130,185,.8);text-transform:uppercase}
-.yuji-btn-primary:hover{background:rgba(200,130,185,.85);border-color:rgba(200,130,185,1)}
-
-.megumi-float{position:fixed;z-index:9998;pointer-events:none;display:none;transition:right 3s ease-in-out,bottom 3s ease-in-out,top 3s ease-in-out,left 3s ease-in-out}
-.megumi-head{width:72px;height:72px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.25))}
-.megumi-bubble{position:absolute;bottom:calc(100% + 14px);left:50%;transform:translateX(-50%) scale(.7);background:rgba(242,210,228,.45);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1.5px solid rgba(205,175,130,.45);color:#4a3f6b;font-family:system-ui,sans-serif;font-size:13px;line-height:1.4;padding:40px;border-radius:12px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease;box-shadow:0 4px 20px rgba(0,0,0,.08);text-align:center;overflow:visible;font-weight:500}
-.megumi-bubble::before{content:'✦';position:absolute;top:8px;left:10px;font-size:10px;color:rgba(205,175,130,.55)}
-.megumi-bubble::after{content:'✦';position:absolute;top:8px;right:10px;font-size:10px;color:rgba(205,175,130,.55)}
-.megumi-tail{position:absolute;top:100%;left:50%;transform:translateX(-50%);border:10px solid transparent;border-top-color:rgba(205,175,130,.35)}
-
-@media(max-width:768px){
-.yuji-head{width:56px;height:56px}
-.megumi-head{width:56px;height:56px}
-.nanami-head{width:56px;height:56px}
-.yuji-bubble{padding:20px 14px;font-size:11px}
-.megumi-bubble{padding:24px;font-size:11px}
-.yuji-btn{font-size:11px;padding:5px 10px}
-.yuji-btns{gap:6px}
-}
-
-.nanami-float{position:fixed;z-index:9997;pointer-events:none;display:none}
-.nanami-head{width:72px;height:72px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.25))}
-.nanami-glow{animation:nanamiGlow 2s ease-in-out infinite}
-@keyframes nanamiGlow{0%,100%{filter:drop-shadow(0 0 15px rgba(205,175,130,.4)) drop-shadow(0 0 40px rgba(242,210,228,.25)) drop-shadow(0 0 80px rgba(255,255,255,.1))}50%{filter:drop-shadow(0 0 30px rgba(205,175,130,.7)) drop-shadow(0 0 60px rgba(242,210,228,.5)) drop-shadow(0 0 120px rgba(255,255,255,.2))}}
-@keyframes surpriseLook{0%{transform:scale(1) translateX(0)}15%{transform:scale(1.2) translateX(6px)}30%{transform:scale(0.95) translateX(4px)}50%{transform:scale(1.05) translateX(5px)}100%{transform:scale(1) translateX(3px)}}
-@keyframes excitedBounce{0%,100%{transform:translateY(0) rotate(0deg)}15%{transform:translateY(-10px) rotate(3deg)}30%{transform:translateY(0) rotate(-2deg)}45%{transform:translateY(-8px) rotate(2deg)}60%{transform:translateY(0) rotate(-1deg)}75%{transform:translateY(-5px) rotate(1deg)}90%{transform:translateY(0)}}
-</style>
-<div class="yuji-float" id="yuji"><div class="yuji-bubble"><span class="yuji-tail"></span><div class="yuji-bubble-text"><span style="display:block;margin-bottom:12px">૮꒰ ˶• ༝ •˶꒱ა ♡</span>HELP YUJI FIND NANAMI</div><div class="yuji-btns"><button class="yuji-btn" onclick="window.yujiLeave()">leave yuji alone</button><button class="yuji-btn yuji-btn-primary" onclick="window.yujiFindNanami()">find nanami</button></div></div><img class="yuji-head" src="yujinew_smol.png" alt="Yuji"></div>
-<div class="megumi-float" id="megumi" style="left:0;top:0"><div class="megumi-bubble"><span class="megumi-tail"></span>Itadori?</div><img class="megumi-head" src="megumi.png" alt="Megumi"></div>
-<div class="nanami-float" id="nanami"><img class="nanami-head" src="nanami.png" alt="Nanami"></div>
 <body>
-
-
-
-<script>
-/* ── yuji random float ── */
-(function(){
-  const el=document.getElementById('yuji');
-  var isMobile=window.innerWidth<=768;
-  const PAD=isMobile?40:400,SPEED=0.4;
-  let x=Math.random()*(window.innerWidth-72-PAD*2)+PAD;
-  let y=Math.random()*(window.innerHeight-72-PAD*2)+PAD;
-  let angle=Math.random()*Math.PI*2;
-  let paused=false,raf,locked=false;
-
-  el.style.left=x+'px';
-  el.style.top=y+'px';
-
-  var SAFE=60;
-  var bubble=el.querySelector('.yuji-bubble');
-
-  // mobile: tap to toggle bubble
-  if(isMobile){
-    el.addEventListener('touchstart',function(e){
-      if(locked) return;
-      e.preventDefault();
-      if(paused){paused=false;el.classList.remove('paused')}
-      else{paused=true;el.classList.add('paused')}
-    });
-  } else {
-    document.addEventListener('mousemove',function(e){
-      var r1=el.getBoundingClientRect();
-      var r2=bubble.getBoundingClientRect();
-      var left=Math.min(r1.left,r2.left)-SAFE;
-      var top=Math.min(r1.top,r2.top)-SAFE;
-      var right=Math.max(r1.right,r2.right)+SAFE;
-      var bottom=Math.max(r1.bottom,r2.bottom)+SAFE;
-      var inside=e.clientX>=left&&e.clientX<=right&&e.clientY>=top&&e.clientY<=bottom;
-      if(inside&&!paused&&!dismissed){paused=true;el.classList.add('paused')}
-      if(!inside&&paused&&!locked){paused=false;el.classList.remove('paused')}
-      if(!inside){dismissed=false}
-    });
-  }
-
-  function step(){
-    if(!paused){
-      x+=Math.cos(angle)*SPEED;
-      y+=Math.sin(angle)*SPEED;
-      // gentle wandering
-      angle+=((Math.random()-0.5)*0.04);
-      // bounce off padded edges
-      if(x<PAD){x=PAD;angle=Math.PI-angle;}
-      if(x>window.innerWidth-72-PAD){x=window.innerWidth-72-PAD;angle=Math.PI-angle;}
-      if(y<PAD){y=PAD;angle=-angle;}
-      if(y>window.innerHeight-72-PAD){y=window.innerHeight-72-PAD;angle=-angle;}
-      el.style.left=x+'px';
-      el.style.top=y+'px';
-    }
-    raf=requestAnimationFrame(step);
-  }
-  step();
-
-  // leave yuji alone: close bubble, resume floating
-  var dismissed=false;
-  window.yujiLeave=function(){
-    dismissed=true;
-    paused=false;
-    el.classList.remove('paused');
-  };
-
-  // find nanami sequence
-  window.yujiFindNanami=function(){
-    // 1. close current bubble
-    paused=false;
-    el.classList.remove('paused');
-
-    // 2. disable hover during sequence
-    var searching=true;
-    el.classList.add('yuji-searching');
-
-    // pre-create audio in click context for autoplay policy
-    var audio=new Audio('yuji-nanamin-call.mp3');
-    audio.currentTime=30;
-
-    // 3. hide, teleport to left-middle, then pop in
-    el.style.opacity='0';
-    setTimeout(function(){
-      locked=true;
-      // disable transition for instant teleport
-      el.style.transition='none';
-      x=PAD;
-      y=window.innerHeight/2-36;
-      el.style.left=x+'px';
-      el.style.top=y+'px';
-      paused=true;
-
-      // force reflow then restore transition
-      el.offsetHeight;
-      el.style.transition='';
-      el.style.opacity='1';
-
-      // pop effect on the head
-      var head=el.querySelector('.yuji-head');
-      var iconSize=isMobile?56:72;
-      head.style.animation='yujiPop 0.4s ease-out';
-      setTimeout(function(){head.style.animation='yujiSway 1.2s ease-in-out infinite'},400);
-
-      // 4. show search bubble with first text
-      var bubbleText=el.querySelector('.yuji-bubble-text');
-      var btns=el.querySelector('.yuji-btns');
-      btns.style.display='none';
-      bubbleText.innerHTML='NAANAMIIIIIIINNNN.....';
-      bubbleText.style.marginBottom='0';
-      bubble.style.padding=isMobile?'24px':'40px';
-      el.classList.add('paused');
-
-      // 5. play audio from 0:30, fade out at 0:39, stop at 0:40
-      audio.volume=1;
-      audio.play();
-      // fade out starting at 9s (0:39)
-      setTimeout(function(){
-        var fadeInt=setInterval(function(){
-          if(audio.volume>0.05){audio.volume=Math.max(0,audio.volume-0.05)}
-          else{audio.volume=0;audio.pause();clearInterval(fadeInt)}
-        },50);
-      },9000);
-
-      // 6. after 5s replace text
-      setTimeout(function(){
-        bubbleText.innerHTML='NANAMIN, ARE YOU HERE?!?';
-        bubble.style.removeProperty('opacity');
-        bubble.style.opacity='1';
-      },5000);
-
-      // bubble disappears with audio fade
-      setTimeout(function(){
-        bubble.style.setProperty('opacity','0','important');
-      },9000);
-
-      // 7. at 9s megumi appears in bottom-right
-      setTimeout(function(){
-        var meg=document.getElementById('megumi');
-        var megSize=isMobile?56:72;
-        meg.style.left=(window.innerWidth-megSize-PAD)+'px';
-        meg.style.top=(window.innerHeight-megSize-PAD)+'px';
-        meg.style.display='block';
-        var megHead=meg.querySelector('.megumi-head');
-        megHead.style.animation='yujiPop 0.4s ease-out';
-        setTimeout(function(){megHead.style.animation='yujiBob 1.6s ease-in-out infinite'},400);
-        // show megumi bubble
-        meg.querySelector('.megumi-bubble').style.opacity='1';
-        meg.querySelector('.megumi-bubble').style.transform='translateX(-50%) scale(1)';
-
-        // after 3s hide megumi bubble
-        var megBubble=meg.querySelector('.megumi-bubble');
-        setTimeout(function(){
-          megBubble.style.opacity='0';
-
-          // after 1s show new text
-          setTimeout(function(){
-            megBubble.lastChild.textContent='(≖_≖) this is annoying..';
-            megBubble.style.opacity='1';
-
-            // after 4s change text
-            setTimeout(function(){
-              megBubble.lastChild.textContent='still... should i help him?';
-
-              // after 4s show CTA bubble
-              setTimeout(function(){
-                megBubble.innerHTML='<span class="megumi-tail"></span><div style="margin-bottom:16px;font-weight:500">what should megumi do?</div><div class="yuji-btns"><button class="yuji-btn" onclick="window.megHelp()">help yuji</button><button class="yuji-btn" onclick="window.megIgnore()">ignore yuji</button></div>';
-                megBubble.style.opacity='1';
-              },4000);
-            },4000);
-          },1000);
-        },3000);
-      },9000);
-
-    },300);
-  };
-})();
-</script>
 
 <script>
 /* ── generate twinkling stars ── */
@@ -252,8 +19,8 @@
         star.classList.add('star');
 
         const size = Math.random() < 0.2
-            ? Math.floor(Math.random() * 10 + 16)   // large
-            : Math.floor(Math.random() * 8 + 6);     // small
+            ? Math.floor(Math.random() * 10 + 16)
+            : Math.floor(Math.random() * 8 + 6);
 
         if (size >= 16) star.classList.add('large');
 
@@ -269,9 +36,7 @@
         body.appendChild(star);
     }
 })();
-
-</script>   
-</head>
+</script>
 
 </body>
 </html>
