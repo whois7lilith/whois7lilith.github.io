@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono&display=swap" rel="stylesheet">
   <title>lilith.work</title>
 </head>
 <body>
@@ -39,6 +42,74 @@
       </div>
     </div>
   </div>
+
+  <!-- DOCK NAV -->
+  <nav class="dock">
+
+    <!-- works -->
+    <a class="dock-item" href="#works">
+      <div class="dock-icon">
+        <svg width="52" height="44" viewBox="0 0 52 44" xmlns="http://www.w3.org/2000/svg">
+          <!-- folder back -->
+          <rect x="2" y="13" width="48" height="29" rx="3" fill="#5A96CC"/>
+          <!-- tab -->
+          <path d="M2 9 Q2 7 4 7 L20 7 Q22 7 23 9 L26 13 L2 13 Z" fill="#4A87BB"/>
+          <!-- folder front -->
+          <rect x="2" y="17" width="48" height="25" rx="3" fill="#7FBAE8"/>
+          <!-- shine -->
+          <rect x="6" y="19" width="40" height="3" rx="1.5" fill="rgba(255,255,255,0.38)"/>
+        </svg>
+      </div>
+      <span class="dock-label">works</span>
+    </a>
+
+    <!-- sidequests — pixel jumping character -->
+    <a class="dock-item" href="#sidequests">
+      <div class="dock-icon">
+        <!-- app icon bg -->
+        <svg width="52" height="52" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
+          <!-- rounded bg -->
+          <rect x="0" y="0" width="52" height="52" rx="12" fill="#F0C8DC"/>
+          <!-- pixel character, 10x11 grid scaled to ~30px, centered -->
+          <g transform="translate(11, 10) scale(3)">
+            <!-- hair -->
+            <rect x="3" y="0" width="4" height="1" fill="#2A1F1A"/>
+            <rect x="2" y="1" width="6" height="1" fill="#2A1F1A"/>
+            <!-- face -->
+            <rect x="2" y="2" width="6" height="1" fill="#F5C9A5"/>
+            <!-- eyes -->
+            <rect x="2" y="3" width="1" height="1" fill="#F5C9A5"/>
+            <rect x="3" y="3" width="1" height="1" fill="#1A2A4A"/>
+            <rect x="4" y="3" width="2" height="1" fill="#F5C9A5"/>
+            <rect x="6" y="3" width="1" height="1" fill="#1A2A4A"/>
+            <rect x="7" y="3" width="1" height="1" fill="#F5C9A5"/>
+            <!-- face lower -->
+            <rect x="2" y="4" width="6" height="1" fill="#F5C9A5"/>
+            <!-- body -->
+            <rect x="1" y="5" width="8" height="2" fill="#6A9AC0"/>
+            <!-- arms extended (jump) -->
+            <rect x="0" y="7" width="1" height="1" fill="#6A9AC0"/>
+            <rect x="9" y="7" width="1" height="1" fill="#6A9AC0"/>
+            <!-- hips -->
+            <rect x="2" y="7" width="6" height="1" fill="#6A9AC0"/>
+            <!-- legs bent up -->
+            <rect x="1" y="8" width="2" height="1" fill="#2A3F5A"/>
+            <rect x="7" y="8" width="2" height="1" fill="#2A3F5A"/>
+            <rect x="0" y="9" width="2" height="1" fill="#2A3F5A"/>
+            <rect x="8" y="9" width="2" height="1" fill="#2A3F5A"/>
+          </g>
+        </svg>
+      </div>
+      <span class="dock-label">sidequests</span>
+    </a>
+
+    <!-- profile — empty for now -->
+    <a class="dock-item" href="#profile">
+      <div class="dock-icon dock-icon--profile"></div>
+      <span class="dock-label">profile</span>
+    </a>
+
+  </nav>
 
   <script>
   const elements = {
