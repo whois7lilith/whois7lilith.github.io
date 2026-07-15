@@ -644,12 +644,18 @@ a:hover { text-decoration: underline; }
 /* ── MOBILE: center machine above dock ── */
 @media (max-width: 768px) {
   .wrapper {
-    --m: 1.2;
     right: auto;
     bottom: auto;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(0.75);
+    transform-origin: center center;
     align-items: center;
+  }
+
+  .wrapper.machine-visible {
+    opacity: 1;
+    pointer-events: all;
+    transform: translate(-50%, -50%) scale(0.75);
   }
 }
