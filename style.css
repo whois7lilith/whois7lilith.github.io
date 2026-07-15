@@ -572,15 +572,15 @@ a:hover { text-decoration: underline; }
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.04em;
-  color: #3A3A3A;
+  color: #4A5E78;
 }
 
 .header-title {
   font-family: 'Space Mono', monospace;
   font-size: 10px;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #7A7A7A;
+  color: #7A90AA;
 }
 
 .header-right {
@@ -592,8 +592,9 @@ a:hover { text-decoration: underline; }
 .header-hover-label {
   font-family: 'Space Mono', monospace;
   font-size: 10px;
-  letter-spacing: 0.08em;
-  color: #4A4A4A;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #5A6E8A;
   opacity: 0;
   transform: translateX(6px);
   transition: opacity 0.2s ease, transform 0.2s ease;
@@ -625,7 +626,7 @@ a:hover { text-decoration: underline; }
 }
 
 .header-icon {
-  color: #4A4A4A;
+  color: #7A90AA;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -635,5 +636,5 @@ a:hover { text-decoration: underline; }
 
 .header-icon:hover {
   transform: translateY(-2px);
-  color: #1A1A1A;
+  color: #4A6280;
 }
