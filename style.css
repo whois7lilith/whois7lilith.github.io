@@ -580,7 +580,7 @@ a:hover { text-decoration: underline; }
   font-size: 10px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #7A90AA;
+  color: #7A7A7A;
 }
 
 .header-right {
@@ -594,7 +594,7 @@ a:hover { text-decoration: underline; }
   font-size: 10px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #5A6E8A;
+  color: #7A7A7A;
   opacity: 0;
   transform: translateX(6px);
   transition: opacity 0.2s ease, transform 0.2s ease;
@@ -626,7 +626,7 @@ a:hover { text-decoration: underline; }
 }
 
 .header-icon {
-  color: #7A90AA;
+  color: #7A7A7A;
   display: flex;
   align-items: center;
   justify-content: center;
