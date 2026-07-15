@@ -557,7 +557,7 @@ a:hover { text-decoration: underline; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 40px;
+  padding: 18px 56px;
   background: transparent;
 }
 
@@ -630,8 +630,8 @@ a:hover { text-decoration: underline; }
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
   text-decoration: none;
   transition: transform 0.18s ease, color 0.18s ease;
 }
