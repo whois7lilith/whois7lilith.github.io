@@ -510,9 +510,9 @@ a:hover { text-decoration: underline; }
 /* ── DOCK NAV ── */
 .dock {
   position: fixed;
-  top: 50%;
+  bottom: 40px;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
   gap: 4px;
@@ -547,14 +547,6 @@ a:hover { text-decoration: underline; }
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.dock-icon--profile {
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
-  background: rgba(200, 196, 164, 0.15);
-  border: 1.5px dashed #C8C4A4;
 }
 
 .dock-label {
