@@ -43,21 +43,77 @@
     </div>
   </div>
 
+  <!-- HEADER -->
+  <header class="site-header">
+
+    <!-- left: name + title -->
+    <div class="header-left">
+      <span class="header-name">Lilith</span>
+      <span class="header-title">product designer</span>
+    </div>
+
+    <!-- right: let's connect + icons -->
+    <div class="header-right">
+      <span class="header-connect">let's connect</span>
+
+      <!-- LinkedIn -->
+      <a class="header-icon" href="https://linkedin.com" target="_blank" aria-label="LinkedIn">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.4"/>
+          <rect x="3.5" y="6" width="1.8" height="6.5" fill="currentColor"/>
+          <circle cx="4.4" cy="4" r="1.1" fill="currentColor"/>
+          <path d="M7 6h1.7v.9C9 6.3 9.8 6 10.6 6c1.6 0 2.4 1 2.4 2.8v3.7h-1.8V9.1c0-.9-.3-1.4-1-1.4-.8 0-1.2.5-1.2 1.5v3.3H7V6z" fill="currentColor"/>
+        </svg>
+      </a>
+
+      <!-- Instagram -->
+      <a class="header-icon" href="https://instagram.com/whois.lilith" target="_blank" aria-label="Instagram">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="1" y="1" width="14" height="14" rx="3.5" stroke="currentColor" stroke-width="1.4"/>
+          <circle cx="8" cy="8" r="2.8" stroke="currentColor" stroke-width="1.4"/>
+          <circle cx="11.5" cy="4.5" r="0.9" fill="currentColor"/>
+        </svg>
+      </a>
+
+      <!-- Mail -->
+      <a class="header-icon" href="mailto:hello@lilith.work" aria-label="Email">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="1" y="3" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M1.5 4L8 9l6.5-5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+      </a>
+
+      <!-- CV -->
+      <a class="header-icon" href="#" aria-label="CV">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 2h7l3 3v9a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1z" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M10 2v3h3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <line x1="4.5" y1="8" x2="11.5" y2="8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <line x1="4.5" y1="10.5" x2="11.5" y2="10.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <line x1="4.5" y1="13" x2="8.5" y2="13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+      </a>
+
+    </div>
+  </header>
+
   <!-- DOCK NAV -->
   <nav class="dock">
 
     <!-- works -->
     <a class="dock-item" href="#works">
       <div class="dock-icon">
-        <svg width="52" height="44" viewBox="0 0 52 44" xmlns="http://www.w3.org/2000/svg">
+        <svg width="52" height="52" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+          <!-- frame bg -->
+          <rect x="0" y="0" width="52" height="52" rx="12" fill="#C8DCF0"/>
           <!-- folder back -->
-          <rect x="2" y="13" width="48" height="29" rx="3" fill="#5A96CC"/>
+          <rect x="6" y="17" width="40" height="24" rx="3" fill="#5A96CC"/>
           <!-- tab -->
-          <path d="M2 9 Q2 7 4 7 L20 7 Q22 7 23 9 L26 13 L2 13 Z" fill="#4A87BB"/>
+          <path d="M6 13 Q6 11 8 11 L20 11 Q22 11 23 13 L26 17 L6 17 Z" fill="#4A87BB"/>
           <!-- folder front -->
-          <rect x="2" y="17" width="48" height="25" rx="3" fill="#7FBAE8"/>
+          <rect x="6" y="21" width="40" height="20" rx="3" fill="#7FBAE8"/>
           <!-- shine -->
-          <rect x="6" y="19" width="40" height="3" rx="1.5" fill="rgba(255,255,255,0.38)"/>
+          <rect x="10" y="23" width="32" height="2.5" rx="1.25" fill="rgba(255,255,255,0.4)"/>
         </svg>
       </div>
       <span class="dock-label">works</span>
@@ -66,33 +122,24 @@
     <!-- sidequests — pixel jumping character -->
     <a class="dock-item" href="#sidequests">
       <div class="dock-icon">
-        <!-- app icon bg -->
         <svg width="52" height="52" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
-          <!-- rounded bg -->
+          <!-- frame bg -->
           <rect x="0" y="0" width="52" height="52" rx="12" fill="#F0C8DC"/>
-          <!-- pixel character, 10x11 grid scaled to ~30px, centered -->
+          <!-- pixel character 10x10 grid × 3px, centered -->
           <g transform="translate(11, 10) scale(3)">
-            <!-- hair -->
             <rect x="3" y="0" width="4" height="1" fill="#2A1F1A"/>
             <rect x="2" y="1" width="6" height="1" fill="#2A1F1A"/>
-            <!-- face -->
             <rect x="2" y="2" width="6" height="1" fill="#F5C9A5"/>
-            <!-- eyes -->
             <rect x="2" y="3" width="1" height="1" fill="#F5C9A5"/>
             <rect x="3" y="3" width="1" height="1" fill="#1A2A4A"/>
             <rect x="4" y="3" width="2" height="1" fill="#F5C9A5"/>
             <rect x="6" y="3" width="1" height="1" fill="#1A2A4A"/>
             <rect x="7" y="3" width="1" height="1" fill="#F5C9A5"/>
-            <!-- face lower -->
             <rect x="2" y="4" width="6" height="1" fill="#F5C9A5"/>
-            <!-- body -->
             <rect x="1" y="5" width="8" height="2" fill="#6A9AC0"/>
-            <!-- arms extended (jump) -->
             <rect x="0" y="7" width="1" height="1" fill="#6A9AC0"/>
             <rect x="9" y="7" width="1" height="1" fill="#6A9AC0"/>
-            <!-- hips -->
             <rect x="2" y="7" width="6" height="1" fill="#6A9AC0"/>
-            <!-- legs bent up -->
             <rect x="1" y="8" width="2" height="1" fill="#2A3F5A"/>
             <rect x="7" y="8" width="2" height="1" fill="#2A3F5A"/>
             <rect x="0" y="9" width="2" height="1" fill="#2A3F5A"/>
@@ -103,9 +150,22 @@
       <span class="dock-label">sidequests</span>
     </a>
 
-    <!-- profile — empty for now -->
+    <!-- profile — folder with lavender frame -->
     <a class="dock-item" href="#profile">
-      <div class="dock-icon dock-icon--profile"></div>
+      <div class="dock-icon">
+        <svg width="52" height="52" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+          <!-- frame bg -->
+          <rect x="0" y="0" width="52" height="52" rx="12" fill="#D8CCF0"/>
+          <!-- folder back -->
+          <rect x="6" y="17" width="40" height="24" rx="3" fill="#8A72C8"/>
+          <!-- tab -->
+          <path d="M6 13 Q6 11 8 11 L20 11 Q22 11 23 13 L26 17 L6 17 Z" fill="#7560B8"/>
+          <!-- folder front -->
+          <rect x="6" y="21" width="40" height="20" rx="3" fill="#A090D8"/>
+          <!-- shine -->
+          <rect x="10" y="23" width="32" height="2.5" rx="1.25" fill="rgba(255,255,255,0.4)"/>
+        </svg>
+      </div>
       <span class="dock-label">profile</span>
     </a>
 
