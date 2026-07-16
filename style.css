@@ -5,21 +5,13 @@
 }
 
 html {
-  background-color: #a8d8ea;
+  background-color: #F2D5CC;
 }
 
 body {
   font-family: sans-serif;
   min-height: 100vh;
-  background: linear-gradient(180deg,
-    #a8d8ea 0%,
-    #b8c9e8 20%,
-    #c4b8e8 40%,
-    #d4b0e0 55%,
-    #e0aad8 70%,
-    #e8a8d0 85%,
-    #f0b0d0 100%
-  );
+  background: #F2D5CC;
   overflow: hidden;
   position: relative;
   --brown: #2A3F5A;
@@ -509,15 +501,15 @@ a:hover { text-decoration: underline; }
   display: flex;
   align-items: center;
   gap: 4px;
-  background: rgba(255, 255, 255, 0.62);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  background: rgba(253, 248, 244, 0.97);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   border-radius: 28px;
   padding: 16px 24px;
+  border: 1px solid rgba(180, 155, 143, 0.3);
   box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.07),
-    0 1px 2px rgba(0, 0, 0, 0.04),
-    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+    0 4px 16px rgba(180, 120, 100, 0.07),
+    0 1px 2px rgba(180, 120, 100, 0.05);
 }
 
 .dock-item {
