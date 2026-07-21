@@ -329,135 +329,185 @@
 
     // ── Sidequests: toggle claw machine ──
     document.getElementById('sidequests-btn').addEventListener('click', e => {
-      e.preventDefault();
-      document.querySelector('.wrapper').classList.toggle('machine-visible');
+      e.preventDefault(); // claw machine hidden for now
     });
   </script>
 
-
-  <!-- MUSIC BUTTON + MINI PLAYER -->
-  <button class="music-btn" id="music-btn" aria-label="Open music player">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- beam -->
-      <rect x="7.5" y="4" width="10" height="2.2" rx="1" fill="currentColor"/>
-      <!-- stems -->
-      <rect x="7.5" y="4" width="1.8" height="13" rx="0.9" fill="currentColor"/>
-      <rect x="15.7" y="4" width="1.8" height="13" rx="0.9" fill="currentColor"/>
-      <!-- note heads (open ovals) -->
-      <ellipse cx="5.8" cy="17.2" rx="3.6" ry="2.2" transform="rotate(-18 5.8 17.2)" stroke="currentColor" stroke-width="1.5" fill="none"/>
-      <ellipse cx="14.8" cy="17.2" rx="3.6" ry="2.2" transform="rotate(-18 14.8 17.2)" stroke="currentColor" stroke-width="1.5" fill="none"/>
+  <!-- ═══ MUSIC PLAYER ═══ -->
+  <button id="music-btn" aria-label="Open music player">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="7" y="3.5" width="10.5" height="2.5" rx="1.25" fill="currentColor"/>
+      <rect x="7" y="3.5" width="2" height="13.5" rx="1" fill="currentColor"/>
+      <rect x="15.5" y="3.5" width="2" height="13.5" rx="1" fill="currentColor"/>
+      <ellipse cx="5.5" cy="17" rx="3.8" ry="2.4" transform="rotate(-15 5.5 17)" stroke="currentColor" stroke-width="1.6" fill="none"/>
+      <ellipse cx="14.2" cy="17" rx="3.8" ry="2.4" transform="rotate(-15 14.2 17)" stroke="currentColor" stroke-width="1.6" fill="none"/>
     </svg>
   </button>
 
-  <div class="mini-player" id="mini-player" aria-hidden="true">
-    <button class="player-close" id="player-close" aria-label="Close player">✕</button>
-
-    <div class="player-top">
-      <div class="player-art" id="player-art"></div>
-      <div class="player-info">
-        <div class="player-title" id="player-title">Somewhere Far Away</div>
-        <div class="player-artist" id="player-artist">lo-fi channel</div>
-        <div class="player-tracks">
-          <button class="track-btn active" data-track="0">1</button>
-          <button class="track-btn" data-track="1">2</button>
-          <button class="track-btn" data-track="2">3</button>
-          <button class="track-btn" data-track="3">4</button>
-          <button class="track-btn" data-track="4">5</button>
+  <div id="mini-player">
+    <button id="player-close" aria-label="Close">✕</button>
+    <div id="player-top">
+      <div id="player-art"></div>
+      <div id="player-info">
+        <div id="player-title">Somewhere Far Away</div>
+        <div id="player-artist">lo-fi channel</div>
+        <div id="player-tracks">
+          <button class="trk active" data-i="0">1</button>
+          <button class="trk" data-i="1">2</button>
+          <button class="trk" data-i="2">3</button>
+          <button class="trk" data-i="3">4</button>
+          <button class="trk" data-i="4">5</button>
         </div>
       </div>
     </div>
-
-    <div class="player-progress">
-      <span class="player-time" id="current-time">0:00</span>
-      <div class="progress-bar">
-        <div class="progress-fill" id="progress-fill" style="width:0%"></div>
-      </div>
-      <span class="player-time">3:24</span>
+    <div id="player-prog">
+      <span id="prog-cur">0:00</span>
+      <div id="prog-bar"><div id="prog-fill"></div></div>
+      <span id="prog-dur">3:24</span>
     </div>
-
-    <div class="player-controls">
-      <button class="ctrl-btn" id="prev-btn" aria-label="Previous">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M19 5L9 12l10 7V5z" fill="currentColor"/><rect x="5" y="5" width="2.5" height="14" rx="1" fill="currentColor"/></svg>
+    <div id="player-ctrls">
+      <button class="ctrl" id="btn-prev">
+        <svg width="16" height="16" viewBox="0 0 24 24"><path d="M19 5L9 12l10 7V5z" fill="currentColor"/><rect x="5" y="5" width="2.5" height="14" rx="1" fill="currentColor"/></svg>
       </button>
-      <button class="ctrl-btn play-btn" id="play-btn" aria-label="Play">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" id="play-icon"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" id="pause-icon" style="display:none"><rect x="5" y="4" width="4" height="16" rx="1.5" fill="currentColor"/><rect x="15" y="4" width="4" height="16" rx="1.5" fill="currentColor"/></svg>
+      <button class="ctrl" id="btn-play">
+        <svg id="ico-play" width="16" height="16" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg>
+        <svg id="ico-pause" width="16" height="16" viewBox="0 0 24 24" style="display:none"><rect x="5" y="4" width="4" height="16" rx="1.5" fill="currentColor"/><rect x="15" y="4" width="4" height="16" rx="1.5" fill="currentColor"/></svg>
       </button>
-      <button class="ctrl-btn" id="next-btn" aria-label="Next">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 5l10 7L5 19V5z" fill="currentColor"/><rect x="16.5" y="5" width="2.5" height="14" rx="1" fill="currentColor"/></svg>
+      <button class="ctrl" id="btn-next">
+        <svg width="16" height="16" viewBox="0 0 24 24"><path d="M5 5l10 7L5 19V5z" fill="currentColor"/><rect x="16.5" y="5" width="2.5" height="14" rx="1" fill="currentColor"/></svg>
       </button>
     </div>
   </div>
 
+  <style>
+    #music-btn {
+      position: fixed !important;
+      bottom: 40px !important;
+      right: 40px !important;
+      z-index: 9999 !important;
+      width: 40px; height: 40px;
+      background: none; border: none; cursor: pointer; padding: 0;
+      color: #4A5E78;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.18s ease;
+    }
+    #music-btn:hover { transform: scale(1.1); }
+
+    #mini-player {
+      position: fixed !important;
+      bottom: 92px !important;
+      right: 40px !important;
+      z-index: 9998 !important;
+      width: 320px;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 8px 36px rgba(0,0,0,0.13), 0 1px 3px rgba(0,0,0,0.07);
+      display: none;
+    }
+    #player-close {
+      position: absolute; top: 12px; right: 12px;
+      background: rgba(0,0,0,0.07); border: none; border-radius: 50%;
+      width: 26px; height: 26px; font-size: 11px; cursor: pointer; color: #555;
+      display: flex; align-items: center; justify-content: center;
+    }
+    #player-close:hover { background: rgba(0,0,0,0.14); }
+    #player-top { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 16px; }
+    #player-art {
+      width: 72px; height: 72px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, #6a9ac0, #b8c9e8);
+    }
+    #player-info { flex: 1; padding-top: 4px; }
+    #player-title {
+      font-family: 'Space Mono', monospace; font-size: 12px; font-weight: 700;
+      color: #2A2A2A; margin-bottom: 3px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 175px;
+    }
+    #player-artist { font-family: 'Space Mono', monospace; font-size: 10px; color: #7A7A7A; margin-bottom: 10px; }
+    #player-tracks { display: flex; gap: 6px; }
+    .trk {
+      width: 28px; height: 28px; border-radius: 8px;
+      border: 1px solid rgba(0,0,0,0.12); background: transparent;
+      font-family: 'Space Mono', monospace; font-size: 11px; color: #555; cursor: pointer;
+    }
+    .trk.active { background: #2A2A2A; color: #fff; border-color: #2A2A2A; }
+    .trk:hover:not(.active) { background: rgba(0,0,0,0.06); }
+    #player-prog { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+    #prog-cur, #prog-dur { font-family: 'Space Mono', monospace; font-size: 9px; color: #9A9A9A; white-space: nowrap; }
+    #prog-bar { flex: 1; height: 3px; background: rgba(0,0,0,0.10); border-radius: 2px; overflow: hidden; }
+    #prog-fill { height: 100%; background: #2A2A2A; border-radius: 2px; width: 0%; transition: width 0.1s linear; }
+    #player-ctrls { display: flex; align-items: center; justify-content: center; gap: 20px; }
+    .ctrl {
+      background: none; border: none; cursor: pointer; color: #3A3A3A;
+      display: flex; align-items: center; justify-content: center;
+      padding: 6px; border-radius: 50%;
+    }
+    .ctrl:hover { background: rgba(0,0,0,0.06); }
+    #btn-play {
+      width: 44px; height: 44px;
+      background: #2A2A2A !important; color: #fff; border-radius: 50%;
+    }
+    #btn-play:hover { background: #111 !important; }
+    @media (max-width: 768px) {
+      #music-btn { bottom: 160px !important; right: 20px !important; }
+      #mini-player { bottom: 210px !important; right: 12px !important; width: calc(100vw - 24px); }
+    }
+  </style>
+
   <script>
-    // ── Music player ──
+  (function() {
     const tracks = [
       { title: 'Somewhere Far Away', artist: 'lo-fi channel',   bg: 'linear-gradient(135deg,#6a9ac0,#b8c9e8)' },
       { title: 'Late Night Drive',   artist: 'chill beats',     bg: 'linear-gradient(135deg,#c4b8e8,#d4b0e0)' },
       { title: 'City Rain',          artist: 'ambient works',   bg: 'linear-gradient(135deg,#e0aad8,#f0b0d0)' },
       { title: 'Soft Mornings',      artist: 'morning tunes',   bg: 'linear-gradient(135deg,#f0b0d0,#e8a8d0)' },
-      { title: 'Ocean Drift',        artist: 'wave sounds',     bg: 'linear-gradient(135deg,#a8d8ea,#6a9ac0)' },
+      { title: 'Ocean Drift',        artist: 'wave sounds',     bg: 'linear-gradient(135deg,#a8d8ea,#6a9ac0)'  },
     ];
-    let currentTrack = 0;
-    let isPlaying = false;
-    let progress = 0;
-    let ticker = null;
+    let cur = 0, playing = false, prog = 0, ticker = null;
 
-    const musicBtn  = document.getElementById('music-btn');
-    const player    = document.getElementById('mini-player');
-    const closeBtn  = document.getElementById('player-close');
-    const playBtn   = document.getElementById('play-btn');
-    const playIcon  = document.getElementById('play-icon');
-    const pauseIcon = document.getElementById('pause-icon');
-    const fill      = document.getElementById('progress-fill');
-    const timeEl    = document.getElementById('current-time');
-    const artEl     = document.getElementById('player-art');
-    const titleEl   = document.getElementById('player-title');
-    const artistEl  = document.getElementById('player-artist');
+    const $  = id => document.getElementById(id);
+    const mb = $('music-btn'), mp = $('mini-player');
+
+    function showPlayer(v) { mp.style.display = v ? 'block' : 'none'; }
 
     function loadTrack(i) {
-      currentTrack = i;
+      cur = i;
       const t = tracks[i];
-      titleEl.textContent  = t.title;
-      artistEl.textContent = t.artist;
-      artEl.style.background = t.bg;
-      document.querySelectorAll('.track-btn').forEach((b, j) =>
-        b.classList.toggle('active', j === i));
-      progress = 0; fill.style.width = '0%'; timeEl.textContent = '0:00';
+      $('player-title').textContent  = t.title;
+      $('player-artist').textContent = t.artist;
+      $('player-art').style.background = t.bg;
+      document.querySelectorAll('.trk').forEach((b,j) => b.classList.toggle('active', j===i));
+      prog = 0; $('prog-fill').style.width = '0%'; $('prog-cur').textContent = '0:00';
     }
 
     function tick() {
-      progress = Math.min(progress + 0.5, 100);
-      fill.style.width = progress + '%';
-      const secs = Math.round((progress / 100) * 204);
-      timeEl.textContent = `${Math.floor(secs/60)}:${String(secs%60).padStart(2,'0')}`;
-      if (progress >= 100) { clearInterval(ticker); isPlaying = false; togglePlay(); }
+      prog = Math.min(prog + 0.5, 100);
+      $('prog-fill').style.width = prog + '%';
+      const s = Math.round((prog/100)*204);
+      $('prog-cur').textContent = Math.floor(s/60)+':'+(s%60+'').padStart(2,'0');
+      if (prog >= 100) { clearInterval(ticker); playing = false; updatePlayBtn(); }
     }
 
-    function togglePlay() {
-      isPlaying = !isPlaying;
-      playIcon.style.display  = isPlaying ? 'none'  : 'block';
-      pauseIcon.style.display = isPlaying ? 'block' : 'none';
-      playBtn.classList.toggle('playing', isPlaying);
-      if (isPlaying) ticker = setInterval(tick, 100);
-      else clearInterval(ticker);
+    function updatePlayBtn() {
+      $('ico-play').style.display  = playing ? 'none'  : 'block';
+      $('ico-pause').style.display = playing ? 'block' : 'none';
     }
 
-    musicBtn.addEventListener('click', () => {
-      const visible = player.classList.contains('open');
-      player.classList.toggle('open');
-      player.setAttribute('aria-hidden', visible ? 'true' : 'false');
+    mb.addEventListener('click', () => showPlayer(mp.style.display !== 'block'));
+    $('player-close').addEventListener('click', () => showPlayer(false));
+    $('btn-play').addEventListener('click', () => {
+      playing = !playing;
+      updatePlayBtn();
+      if (playing) ticker = setInterval(tick, 100); else clearInterval(ticker);
     });
-    closeBtn.addEventListener('click', () => {
-      player.classList.remove('open');
-      player.setAttribute('aria-hidden', 'true');
-    });
-    playBtn.addEventListener('click', togglePlay);
-    document.getElementById('next-btn').addEventListener('click', () => loadTrack((currentTrack + 1) % tracks.length));
-    document.getElementById('prev-btn').addEventListener('click', () => loadTrack((currentTrack - 1 + tracks.length) % tracks.length));
-    document.querySelectorAll('.track-btn').forEach((b, i) => b.addEventListener('click', () => loadTrack(i)));
+    $('btn-next').addEventListener('click', () => loadTrack((cur+1) % tracks.length));
+    $('btn-prev').addEventListener('click', () => loadTrack((cur-1+tracks.length) % tracks.length));
+    document.querySelectorAll('.trk').forEach((b,i) => b.addEventListener('click', () => loadTrack(i)));
 
     loadTrack(0);
+  })();
   </script>
 
 </body>
