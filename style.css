@@ -660,7 +660,7 @@ a:hover { text-decoration: underline; }
   position: fixed;
   bottom: 40px;
   right: 40px;
-  z-index: 60;
+  z-index: 200;
   width: 40px;
   height: 40px;
   background: none;
@@ -675,7 +675,7 @@ a:hover { text-decoration: underline; }
 }
 
 .music-btn:hover {
-  transform: scale(1.09); /* 24px → ~26px */
+  transform: scale(1.09);
 }
 
 /* ── MINI PLAYER ── */
@@ -683,7 +683,7 @@ a:hover { text-decoration: underline; }
   position: fixed;
   bottom: 92px;
   right: 40px;
-  z-index: 59;
+  z-index: 199;
   width: 320px;
   background: rgba(255, 255, 255, 0.78);
   backdrop-filter: blur(20px);
