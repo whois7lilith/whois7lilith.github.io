@@ -398,18 +398,19 @@
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border-radius: 20px;
-      padding: 20px;
+      padding: 24px 24px 20px 24px;
       box-shadow: 0 8px 36px rgba(0,0,0,0.13), 0 1px 3px rgba(0,0,0,0.07);
       display: none;
     }
     #player-close {
-      position: absolute; top: 12px; right: 12px;
+      position: absolute; top: 14px; right: 14px;
       background: rgba(0,0,0,0.07); border: none; border-radius: 50%;
       width: 26px; height: 26px; font-size: 11px; cursor: pointer; color: #555;
       display: flex; align-items: center; justify-content: center;
+      pointer-events: all !important;
     }
     #player-close:hover { background: rgba(0,0,0,0.14); }
-    #player-top { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 16px; }
+    #player-top { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 18px; }
     #player-art {
       width: 72px; height: 72px; border-radius: 50%; flex-shrink: 0;
       background: linear-gradient(135deg, #6a9ac0, #b8c9e8);
@@ -417,32 +418,40 @@
     #player-info { flex: 1; padding-top: 4px; }
     #player-title {
       font-family: 'Space Mono', monospace; font-size: 12px; font-weight: 700;
-      color: #2A2A2A; margin-bottom: 3px;
+      color: #2A2A2A; margin-bottom: 4px;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 175px;
     }
-    #player-artist { font-family: 'Space Mono', monospace; font-size: 10px; color: #7A7A7A; margin-bottom: 10px; }
-    #player-tracks { display: flex; gap: 6px; }
+    #player-artist { font-family: 'Space Mono', monospace; font-size: 10px; color: #7A7A7A; margin-bottom: 12px; }
+    #player-tracks { display: flex; gap: 12px; }
     .trk {
       width: 28px; height: 28px; border-radius: 8px;
       border: 1px solid rgba(0,0,0,0.12); background: transparent;
       font-family: 'Space Mono', monospace; font-size: 11px; color: #555; cursor: pointer;
+      pointer-events: all !important;
+      display: flex; align-items: center; justify-content: center;
     }
     .trk.active { background: #2A2A2A; color: #fff; border-color: #2A2A2A; }
     .trk:hover:not(.active) { background: rgba(0,0,0,0.06); }
-    #player-prog { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+    #player-prog { display: flex; align-items: center; gap: 8px; margin-bottom: 18px; }
     #prog-cur, #prog-dur { font-family: 'Space Mono', monospace; font-size: 9px; color: #9A9A9A; white-space: nowrap; }
     #prog-bar { flex: 1; height: 3px; background: rgba(0,0,0,0.10); border-radius: 2px; overflow: hidden; }
     #prog-fill { height: 100%; background: #2A2A2A; border-radius: 2px; width: 0%; transition: width 0.1s linear; }
-    #player-ctrls { display: flex; align-items: center; justify-content: center; gap: 20px; }
+    #player-ctrls {
+      display: flex; align-items: center; justify-content: center;
+      gap: 0;
+    }
     .ctrl {
+      flex: 1;
       background: none; border: none; cursor: pointer; color: #3A3A3A;
       display: flex; align-items: center; justify-content: center;
-      padding: 6px; border-radius: 50%;
+      height: 44px; border-radius: 12px;
+      pointer-events: all !important;
     }
-    .ctrl:hover { background: rgba(0,0,0,0.06); }
+    .ctrl:hover { background: rgba(0,0,0,0.05); }
     #btn-play {
-      width: 44px; height: 44px;
+      flex: 1.2;
       background: #2A2A2A !important; color: #fff; border-radius: 50%;
+      width: 44px; height: 44px; flex: 0 0 44px;
     }
     #btn-play:hover { background: #111 !important; }
     @media (max-width: 768px) {
