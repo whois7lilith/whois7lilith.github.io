@@ -350,7 +350,6 @@
           <button class="trk" data-i="1">2</button>
           <button class="trk" data-i="2">3</button>
           <button class="trk" data-i="3">4</button>
-          <button class="trk" data-i="4">5</button>
         </div>
       </div>
     </div>
@@ -422,7 +421,7 @@
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 175px;
     }
     #player-artist { font-family: 'Space Mono', monospace; font-size: 10px; color: #7A7A7A; margin-bottom: 12px; }
-    #player-tracks { display: flex; gap: 12px; }
+    #player-tracks { display: flex; gap: 6px; }
     .trk {
       width: 28px; height: 28px; border-radius: 8px;
       border: 1px solid rgba(0,0,0,0.12); background: transparent;
@@ -463,11 +462,10 @@
   <script>
   (function() {
     const tracks = [
-      { title: 'Somewhere Far Away', artist: 'lo-fi channel',   bg: 'linear-gradient(135deg,#6a9ac0,#b8c9e8)' },
-      { title: 'Late Night Drive',   artist: 'chill beats',     bg: 'linear-gradient(135deg,#c4b8e8,#d4b0e0)' },
-      { title: 'City Rain',          artist: 'ambient works',   bg: 'linear-gradient(135deg,#e0aad8,#f0b0d0)' },
-      { title: 'Soft Mornings',      artist: 'morning tunes',   bg: 'linear-gradient(135deg,#f0b0d0,#e8a8d0)' },
-      { title: 'Ocean Drift',        artist: 'wave sounds',     bg: 'linear-gradient(135deg,#a8d8ea,#6a9ac0)'  },
+      { title: 'Somewhere Far Away', artist: 'lo-fi channel',  bg: 'linear-gradient(135deg,#6a9ac0,#b8c9e8)' },
+      { title: 'Late Night Drive',   artist: 'chill beats',    bg: 'linear-gradient(135deg,#c4b8e8,#d4b0e0)' },
+      { title: 'City Rain',          artist: 'ambient works',  bg: 'linear-gradient(135deg,#e0aad8,#f0b0d0)' },
+      { title: 'Soft Mornings',      artist: 'morning tunes',  bg: 'linear-gradient(135deg,#f0b0d0,#e8a8d0)' },
     ];
     let cur = 0, playing = false, prog = 0, ticker = null;
 
